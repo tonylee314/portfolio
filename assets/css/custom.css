@@ -3,16 +3,18 @@
 	Loaded AFTER main.css so the HTML5 UP template file stays untouched.
 */
 
-/* ---- Sidebar: 30% narrower (18em -> 12.6em), content shifted to match ---- */
+/* ---- Sidebar: narrower than the template's 18em, content shifted to
+	   match. 14em is the narrowest that fits the email address on one
+	   line at the contact list's font size. ---- */
 
 	#sidebar {
-		width: 12.6em;
+		width: 14em;
 		padding: 2.5em 1.75em 1.75em 1.75em;
 	}
 
 	#sidebar + #wrapper,
 	#sidebar + #wrapper + #footer {
-		margin-left: 12.6em;
+		margin-left: 14em;
 	}
 
 	/* Nav sits at the top instead of vertically centred, so the links
@@ -105,8 +107,8 @@
 				-webkit-justify-content: flex-end;
 				-ms-justify-content: flex-end;
 				justify-content: flex-end;
-				font-size: 0.62em;
-				letter-spacing: 0.05em;
+				font-size: 0.82em;     /* ~4px larger than the template default */
+				letter-spacing: 0.02em;
 				line-height: 1.6;
 				min-height: 2.2em;              /* comfortable tap target */
 				text-decoration: none;
@@ -213,13 +215,23 @@
 				padding-top: 3.5em;
 			}
 
+			/* The bar is one 3.5em line with overflow hidden, so a label
+			   that wraps gets silently cut in half. Four multi-word items
+			   need nowrap plus tighter tracking to fit a 320px phone;
+			   overflow-x is the safety valve if labels grow again. */
+			#sidebar {
+				overflow-x: auto;
+				overflow-y: hidden;
+			}
+
 			#sidebar nav ul li {
-				margin: 0 0 0 1.25em;
+				margin: 0 0 0 0.85em;
 			}
 
 			#sidebar nav a {
-				font-size: 0.55em;
-				letter-spacing: 0.15em;
+				font-size: 0.48em;
+				letter-spacing: 0.04em;
+				white-space: nowrap;
 			}
 
 	}
@@ -242,15 +254,35 @@
 			justify-content: center;
 		}
 
-		/* Degrees line — smaller and lighter than the role title
-		   so the hierarchy reads name > role > credentials. */
+		/* Degrees — smaller and lighter than the role title so the
+		   hierarchy reads name > role > credentials. Bulleted, but
+		   centred as a block with the text left-aligned inside, since
+		   centred list markers read as ragged. */
 		.hero-education {
+			display: inline-block;
 			font-size: 0.8em;
 			line-height: 1.7;
+			list-style: disc;
 			max-width: 34em;
-			margin: 0.75em auto 0 auto;
+			margin: 0.75em 0 0 0;
+			padding-left: 1.15em;
+			text-align: left;
 			opacity: 0.8;
 		}
+
+			.hero-education li {
+				padding-left: 0.4em;
+			}
+
+			/* Minor, nested under its degree — smaller and a lighter
+			   marker so it reads as subordinate, not a fourth degree. */
+			.hero-education li ul {
+				list-style: circle;
+				margin: 0.3em 0 0 0;
+				padding-left: 1.1em;
+				font-size: 0.9em;
+				opacity: 0.85;
+			}
 
 			@media screen and (max-width: 736px) {
 
@@ -342,6 +374,13 @@
 	   mid-string on a narrow screen. */
 	@media screen and (max-width: 736px) {
 
+		/* Pull the contact block half-way up toward the role title.
+		   The gap is the role paragraph's 2em bottom margin collapsing
+		   with the list's top margin, so both drop to 1em. */
+		.hero-role {
+			margin-bottom: 1em;
+		}
+
 		.hero-contact {
 			-moz-flex-direction: column;
 			-webkit-flex-direction: column;
@@ -367,12 +406,12 @@
 	/* Profile photo */
 	.hero-photo {
 		display: block;
-		width: 9em;
-		height: 9em;
+		width: 12.5em;
+		height: 12.5em;
 		margin: 0 auto 1.25em auto;
 		border-radius: 100%;
 		object-fit: cover;
-		border: 3px solid rgba(255, 255, 255, 0.25);
+		border: 4px solid rgba(255, 255, 255, 0.25);
 	}
 
 	@media screen and (max-width: 1680px) {
@@ -393,8 +432,12 @@
 
 	@media screen and (max-width: 736px) {
 
+		/* Fill the first screen with the hero alone, minus the 3.5em nav
+		   bar above it, so nothing else is visible until you scroll.
+		   svh accounts for mobile browser chrome; vh is the fallback. */
 		#intro.wrapper.fullscreen {
-			min-height: 0;
+			min-height: calc(100vh - 3.5em);
+			min-height: calc(100svh - 3.5em);
 		}
 
 		#intro > .inner {
@@ -402,8 +445,8 @@
 		}
 
 		.hero-photo {
-			width: 8.5em;
-			height: 8.5em;
+			width: 11em;
+			height: 11em;
 			margin-bottom: 1.25em;
 		}
 
@@ -469,13 +512,15 @@
 
 /* ---- Remaining sections: trim vertical padding ---- */
 
-	#two > .inner {
+	#two > .inner,
+	#three > .inner {
 		padding: 3em 5em 2em 5em;
 	}
 
 	@media screen and (max-width: 1680px) {
 
-		#two > .inner {
+		#two > .inner,
+		#three > .inner {
 			padding: 3em 4em 2em 4em;
 		}
 
@@ -483,11 +528,177 @@
 
 	@media screen and (max-width: 736px) {
 
-		#two > .inner {
+		#two > .inner,
+		#three > .inner {
 			padding: 2em 2em 1em 2em;
 		}
 
 	}
+
+/* ---- Publications ---- */
+
+	/* Degree groups sit in reading order (most advanced degree first,
+	   matching the hero education list); each is a heading + list. */
+	.pub-group {
+		margin: 2em 0 0 0;
+	}
+
+		.pub-group:first-of-type {
+			margin-top: 1.5em;
+		}
+
+		.pub-group-title {
+			border-bottom: solid 2px rgba(255, 255, 255, 0.2);
+			font-size: 1.1em;
+			letter-spacing: 0.05em;
+			padding-bottom: 0.4em;
+			text-transform: uppercase;
+		}
+
+		/* Placeholder for a degree with nothing published yet. */
+		.pub-empty {
+			color: rgba(255, 255, 255, 0.6);
+			font-size: 0.85em;
+			font-style: italic;
+			margin: 0.75em 0 0 0;
+		}
+
+	.publications {
+		list-style: none;
+		margin: 0.5em 0 0 0;
+		padding: 0;
+	}
+
+		/* A column flex so the tag — first in the markup, for screen
+		   readers to hear item type before title — can be visually
+		   reordered to the bottom-right corner without the overlap
+		   risk of absolute positioning. */
+		.publications > li {
+			border-top: solid 1px rgba(255, 255, 255, 0.15);
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
+			-moz-flex-direction: column;
+			-webkit-flex-direction: column;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			margin: 0;
+			padding: 1.5em 0;
+		}
+
+			.publications > li:first-child {
+				border-top: 0;
+				padding-top: 0;
+			}
+
+		/* Publication type, at a glance. Colours reuse the site's
+		   existing maroon/white pairing rather than introducing new
+		   ones — same contrast ratios already validated elsewhere. */
+		.pub-tag {
+			-moz-order: 4;
+			-webkit-order: 4;
+			-ms-order: 4;
+			order: 4;
+			-moz-align-self: flex-end;
+			-webkit-align-self: flex-end;
+			-ms-align-self: flex-end;
+			align-self: flex-end;
+			border-radius: 999px;
+			display: inline-block;
+			font-size: 0.62em;
+			font-weight: bold;
+			letter-spacing: 0.1em;
+			line-height: 1;
+			margin: 0.75em 0 0 0;
+			padding: 0.45em 0.9em;
+			text-transform: uppercase;
+		}
+
+			.pub-tag-journal {
+				background-color: #ffffff;
+				color: #5e1630;
+			}
+
+			/* Solid maroon on the section's maroon background has weak
+			   edge definition; a dark outline gives the pill a boundary
+			   independent of the fill/background colour match. */
+			.pub-tag-thesis {
+				background-color: #861F41;
+				border: 1px solid #000000;
+				color: #ffffff;
+			}
+
+			.pub-tag-conference {
+				background-color: transparent;
+				border: 1px solid rgba(255, 255, 255, 0.6);
+				color: rgba(255, 255, 255, 0.9);
+			}
+
+		.pub-title {
+			font-size: 0.9em;
+			line-height: 1.5;
+			margin: 0 0 0.4em 0;
+		}
+
+			.pub-title a {
+				border-bottom: 0;
+				color: #ffffff;
+			}
+
+				.pub-title a:hover {
+					color: rgba(255, 255, 255, 0.75);
+					text-decoration: underline;
+				}
+
+				.pub-title a:focus-visible {
+					outline: 3px solid #ffffff;
+					outline-offset: 3px;
+				}
+
+				/* Marks the link as leaving the site. Decorative — the
+				   span carries aria-hidden so it isn't announced. */
+				.pub-ext {
+					font-weight: normal;
+					margin-left: 0.3em;
+					opacity: 0.7;
+				}
+
+		.pub-authors {
+			color: rgba(255, 255, 255, 0.8);
+			font-size: 0.8em;
+			line-height: 1.6;
+			margin: 0 0 0.15em 0;
+		}
+
+			/* The site owner's own name in the author list. */
+			.pub-authors strong {
+				color: #ffffff;
+			}
+
+		/* 0.8 white on #8a3652 is ~6:1; the template's default body
+		   colour would land near 3:1, under WCAG AA. */
+		.pub-meta {
+			color: rgba(255, 255, 255, 0.8);
+			font-size: 0.8em;
+			line-height: 1.6;
+			margin: 0;
+		}
+
+			.pub-venue {
+				font-style: italic;
+			}
+
+			/* Secondary links (DOI, repository record). */
+			.pub-meta a {
+				border-bottom-color: rgba(255, 255, 255, 0.4);
+				color: inherit;
+			}
+
+				.pub-meta a:hover {
+					border-bottom-color: #ffffff;
+					color: #ffffff;
+				}
 
 /* ---- Hero resume button: responsive sizing ---- */
 
