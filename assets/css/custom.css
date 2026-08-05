@@ -260,6 +260,110 @@
 
 			}
 
+	/* Hero contact list — mobile/tablet only. On desktop the same links
+	   live in the sidebar, so this stays hidden there. */
+	.hero-contact {
+		display: none;
+	}
+
+	@media screen and (max-width: 1280px) {
+
+		.hero-contact {
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
+			-moz-flex-wrap: wrap;
+			-webkit-flex-wrap: wrap;
+			-ms-flex-wrap: wrap;
+			flex-wrap: wrap;
+			-moz-justify-content: center;
+			-webkit-justify-content: center;
+			-ms-justify-content: center;
+			justify-content: center;
+			list-style: none;
+			margin: 0.75em 0 0 0;
+			padding: 0;
+		}
+
+			.hero-contact li {
+				border: 0;
+				margin: 0;
+				padding: 0 1em;
+			}
+
+			.hero-contact a {
+				border: 0;
+				color: rgba(255, 255, 255, 0.85);
+				display: -moz-flex;
+				display: -webkit-flex;
+				display: -ms-flex;
+				display: flex;
+				-moz-align-items: center;
+				-webkit-align-items: center;
+				-ms-align-items: center;
+				align-items: center;
+				font-size: 0.7em;
+				letter-spacing: 0.05em;
+				line-height: 1.6;
+				min-height: 2.4em;              /* comfortable tap target */
+				text-decoration: none;
+				-moz-transition: color 0.2s ease;
+				-webkit-transition: color 0.2s ease;
+				-ms-transition: color 0.2s ease;
+				transition: color 0.2s ease;
+			}
+
+				.hero-contact a:hover,
+				.hero-contact a:focus {
+					color: #ffffff;
+				}
+
+				.hero-contact a:focus-visible {
+					outline: 3px solid #ffffff;
+					outline-offset: 3px;
+				}
+
+				/* Icons are decorative (aria-hidden); the adjacent text
+				   carries the accessible name. */
+				.hero-contact .icon {
+					margin-right: 0.6em;
+					width: 1.2em;
+					text-align: center;
+					-moz-flex-shrink: 0;
+					-webkit-flex-shrink: 0;
+					-ms-flex-shrink: 0;
+					flex-shrink: 0;
+				}
+
+	}
+
+	/* Phones: one link per row so the numbers and handle don't wrap
+	   mid-string on a narrow screen. */
+	@media screen and (max-width: 736px) {
+
+		.hero-contact {
+			-moz-flex-direction: column;
+			-webkit-flex-direction: column;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			-moz-align-items: center;
+			-webkit-align-items: center;
+			-ms-align-items: center;
+			align-items: center;
+			margin-top: 1em;
+		}
+
+			.hero-contact li {
+				padding: 0;
+			}
+
+			.hero-contact a {
+				font-size: 0.75em;
+			}
+
+	}
+
 	/* Profile photo */
 	.hero-photo {
 		display: block;
@@ -385,30 +489,6 @@
 
 	}
 
-/* ---- Footer contact: mobile/tablet fallback for the sidebar block ---- */
-
-	.footer-contact {
-		display: none;
-	}
-
-	@media screen and (max-width: 1280px) {
-
-		.footer-contact {
-			display: block;
-			margin-bottom: 0.5em;
-		}
-
-			.footer-contact a {
-				border-bottom-color: rgba(255, 255, 255, 0.3);
-				color: rgba(255, 255, 255, 0.55);
-			}
-
-				.footer-contact a:hover {
-					color: #ffffff;
-				}
-
-	}
-
 /* ---- Hero resume button: responsive sizing ---- */
 
 	@media screen and (max-width: 1280px) {
@@ -442,6 +522,7 @@
 
 		.resume-btn,
 		.contact-list a,
+		.hero-contact a,
 		#sidebar nav a {
 			-moz-transition: none;
 			-webkit-transition: none;
@@ -450,24 +531,3 @@
 		}
 
 	}
-
-/* ---- Template attribution: required by the HTML5 UP CCA 3.0 licence,
-        kept deliberately quiet. ---- */
-
-	.credit {
-		font-size: 0.6em;
-		line-height: 1.5;
-		letter-spacing: 0.05em;
-		margin: 0.75em 0 0 0;
-		color: rgba(255, 255, 255, 0.5);
-	}
-
-		.credit a {
-			border-bottom-color: rgba(255, 255, 255, 0.25);
-			color: inherit;
-		}
-
-			.credit a:hover {
-				color: rgba(255, 255, 255, 0.85);
-				border-bottom-color: rgba(255, 255, 255, 0.5);
-			}
