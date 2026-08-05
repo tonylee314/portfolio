@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>OSINT</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">RainFly | Open-Source Intelligence (OSINT)</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Goal</h1>
+							<span class="image fit"><img src="images/osint.jpg" alt="" /></span>
+							<p>I ran a six-month formative UX evaluation program on an NSF-funded open-source intelligence platform, delivering a research cycle every month to move the product from prototype toward deployment-ready. Rather than a single usability audit, this was a continuous loop: each cycle tested the current build with practicing OSINT analysts, produced prioritized bug reports and capability requests, and fed directly into the next sprint &mdash; then verified in the following cycle whether the fix actually worked.</p>
+
+							<p><em>This engagement is subject to confidentiality. The methods, structure, and my role are described below; specific findings, metrics, and product details are omitted.</em></p>
+
+							<h1 class="major">Background</h1>
+								<section>
+									<p>OSINT analysts already have a working toolkit &mdash; a set of established, specialized third-party tools they know well. Any platform that consolidates those capabilities is therefore competing against something its users are already fluent in, which sets a demanding bar: it isn't enough to replicate what analysts can do elsewhere, because the switching cost has to be earned. That framing shaped how I designed the evaluations. The question was never just "is this usable," but "is this good enough that a skilled analyst would choose it over the tool they already trust," and the research had to be able to tell those two things apart.</p>
+									<p>The platform was also in active development throughout, which made formative evaluation the right approach. Findings needed to arrive fast enough to change what was being built, in a format the engineering team could act on directly.</p>
+								</section>
+							<h1 class="major">Methods</h1>
+								<section>
+									<h2>Participants</h2>
+									<p>Every cycle recruited practicing OSINT analysts &mdash; the actual expert user population, not proxies. Sample sizes ran from six to eight per cycle, deliberately sized for depth over breadth, with participants organized into small groups so I could observe collaborative dynamics rather than isolated task completion.</p>
+									<hr />
+									<h2>Study Design</h2>
+									<p>Each cycle followed a consistent two-part structure: a design walkthrough capturing first impressions, then hands-on exploration where groups completed a realistic investigative task in the tool and reported back through structured surveys. Sessions were recorded for later analysis.</p>
+									<p>I paired standardized instruments with open-ended inquiry so the numbers had context. Nielsen's usability heuristics gave a consistent diagnostic vocabulary across cycles; the System Usability Scale and UMUX-Lite provided benchmarked, comparable scoring. UMUX-Lite in particular measures perceived ease-of-use and perceived usefulness <em>separately</em>, which turned out to be the most important measurement decision in the program &mdash; those two things moved independently, and conflating them would have hidden the actual problem.</p>
+									<p><strong>The study design evolved as the product did.</strong> Early cycles evaluated individual collection tools in isolation. Middle cycles shifted to whole-workflow investigative tasks. Later cycles restructured entirely around distributed team investigations &mdash; assigning team leads and analysts who were not co-located &mdash; to evaluate collaboration features under realistic conditions, and closed with role-segmented focus groups so leads and analysts could be heard on their own terms rather than averaged together.</p>
+									<p>Findings were delivered each cycle as a structured, prioritized package: reproducible bug reports written with steps, actual behavior, and expected behavior; and capability requests framed as user stories with pain points, proposed logic, and concrete UI/UX suggestions. Every item carried a priority rating so the team could triage against real sprint capacity.</p>
+								</section>
+							<h1 class="major">Insights</h1>
+								<section>
+									<p><strong>Ease of use and usefulness are different problems, and only one of them was the real one.</strong> Across early cycles the pattern was consistent: analysts could operate the tool, but scored its usefulness markedly lower than its usability. They weren't blocked &mdash; they were unconvinced. That distinction reframed the roadmap conversation from "smooth out the interface" to "close the capability gap against the tools people already use," which is a fundamentally different investment.</p>
+									<p><strong>Where analysts went when the tool failed them was the most valuable data I collected.</strong> I made a point of asking, every cycle, whether participants had used anything outside the platform to finish the task &mdash; and what for. Those answers mapped the capability gaps far more precisely than satisfaction scores did, because each external tool an analyst reached for named a specific unmet need and the exact moment it surfaced.</p>
+									<p><strong>Some issues only appear under realistic conditions.</strong> Restructuring later cycles around distributed team investigations surfaced an entire class of problems &mdash; coordination, handoff, oversight, awareness &mdash; that individual task testing had been structurally incapable of revealing. Teams reverted to outside channels to communicate, which was itself the finding.</p>
+									<p><strong>Recurrence is evidence.</strong> Because the program ran continuously, I could distinguish one-off friction from systemic problems by tracking which issues reappeared across multiple cycles despite intervening development. That turned "several people mentioned this" into "this has persisted across three cycles and here is each instance," which carries considerably more weight in a prioritization meeting. I also flagged the inverse case &mdash; a severe issue seen only once &mdash; explicitly, rather than letting low frequency bury high consequence.</p>
+									<p><strong>The final cycle showed the loop working.</strong> The collaboration features that had scored below acceptable thresholds in one cycle were re-tested after the team's revisions and came back above them, with participants independently praising areas that had previously drawn criticism. Measuring the same construct with the same instrument across cycles is what made that improvement legible rather than anecdotal.</p>
+								</section>
+							<h1 class="major">My Learnings</h1>
+								<section>
+									<p>This project taught me what it takes for research to actually stay useful over time rather than landing once and fading. Consistency of instrumentation was most of it &mdash; using the same measures every cycle meant I could show movement, not just describe a snapshot, and that comparability was what made the work credible when it mattered.</p>
+									<p>Studying expert users sharpened the same instinct. Analysts with deep domain fluency don't grade on a curve, and they measure a new tool against the one they already trust rather than against nothing. Their comparisons were the most direct signal I had about whether the product was genuinely earning its place, and learning to treat that as the real bar &mdash; instead of settling for "they completed the task" &mdash; changed how I write research questions.</p>
+								</section>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Tony C. Lee. All rights reserved.</li><li>Last updated: Aug 2026</li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

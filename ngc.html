@@ -16,7 +16,7 @@
 
 		<!-- Header -->
 			<header id="header">
-				<a href="index.html" class="title">ATC/ATM REmote VR Training</a>
+				<a href="index.html" class="title">Northrop Grumman Corporation | ATC/ATM Remote VR Training</a>
 				<nav>
 					<ul>
 						<li><a href="index.html">Home</a></li>
@@ -31,24 +31,39 @@
 					<section id="main" class="wrapper">
 						<div class="inner">
 							<h1 class="major">Goal</h1>
-							<span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
-							<p>xxx</p>
-                            <h1 class="major">Background</h1>
+							<span class="image fit"><img src="images/ngc.jpg" alt="" /></span>
+							<p>Air traffic controllers learn airspace by memorizing dense two-dimensional Visual Flight Rules sectional charts &mdash; altitudes, routes, radio frequencies, airport identifiers &mdash; and they describe it as tedious, high-volume rote work compressed into a short window. Our team built a VR tool that renders an FAA-published sectional map as an interactive 3D environment with toggleable layers, then evaluated its usability and operational readiness with certified professional controllers and aviation subject matter experts. The findings were published in <em>IISE Transactions on Occupational Ergonomics and Human Factors</em>.</p>
+
+							<ul class="actions">
+								<li><a href="https://www.researchgate.net/publication/388387098_An_Iterative_Design_Method_for_Advancing_Air_Traffic_Control_and_Management_Training_Through_Immersive_VFR_3D_Map_Visualization" target="_blank" class="button">Read the Paper</a></li>
+							</ul>
+
+							<h1 class="major">Background</h1>
 								<section>
-                                    <p>xxx</p>
+									<p>This is a workforce problem before it's a technology problem. Certified professional controller headcount hit a 27-year low in 2015, and the FAA projects a net loss of 8,595 controllers across 2021&ndash;2030 &mdash; while the path to certification still takes anywhere from six months to five years and carries meaningful academy attrition. One plausible contributor is low trainee self-efficacy in the earliest, most memorization-heavy stage of training. The FAA has explicitly stated a need to modernize how it trains, which made a portable, self-paced, contextually accurate study tool a genuinely useful thing to test.</p>
+									<p>This study was Phase III of a multi-phase effort. Phase I used SME interviews to identify sectional map training as the right point of entry for immersive technology and established that VR &mdash; not AR &mdash; better suited spatial cognition and map scaling. Phase II built the tool in Blender and Unreal Engine 4 for the Oculus Quest 2 and tested it with a novice population, scoring 73.2 on the System Usability Scale &mdash; "Average," with clear direction for improvement. Phase III is where it went in front of actual experts.</p>
+								</section>
 							<h1 class="major">Methods</h1>
 								<section>
 									<h2>Participants</h2>
-									<p>xxx</p>
-                                    <hr />
-                                    <h2>Study Design</h2>
-									<p>xxx</p>
-                            <h1 class="major">Insights</h1>
+									<p>Recruitment was deliberately strict, since the whole point was expert judgment. A qualification survey drew 82 attempts; 35 respondents were screened out for lacking formal ATC/ATM training, and 21 qualified on the basis of formal training or FAA-recognized certification. Sixteen completed the exploration survey, and seven were selected for hands-on remote usability testing &mdash; including certified professional controllers with 15+ years of FAA certification, ATM degree holders, a current ATM student, and an aviation professor who directs training for an FAA contractor.</p>
+									<hr />
+									<h2>Study Design</h2>
+									<p>A between-subjects, mixed-method iterative design study. Tool iteration (Phase II vs. Phase III GUI) was the independent variable and System Usability Scale score the primary dependent measure, supplemented by think-aloud data, open-ended survey responses, and interview feedback.</p>
+									<p>The testing was run entirely remotely, which was itself part of the research question &mdash; if the tool is meant to let trainees study outside a lab, it has to survive being shipped to someone's house. Each participant received a hard case containing an Oculus Quest 2, a VR-capable laptop, cabling, and printed setup and task instructions. Participants worked through 12 procedural tasks (rotating and translating the view, toggling individual and global map layers, pointing to locate a specific city, resetting the camera, then naming airspaces, airports within a given MOA, and victor lines from a given point) while screen recording and thinking aloud. A post-usability survey captured SUS and design recommendations; a Zoom semi-structured interview followed within 24&ndash;48 hours. Between participants, kits were inspected, purged of data, and sanitized with a UV system before redeployment.</p>
+								</section>
+							<h1 class="major">Insights</h1>
 								<section>
-                                    <p>xxx</p>
-                            <h1 class="major">My Learnings</h1>
+									<p><strong>The iteration worked, and the SUS score shows it.</strong> The tool scored a mean of 85 with the expert population &mdash; above the 80 threshold for "Good" usability and a meaningful jump from the 73.2 "Average" of the prior iteration. Participants rated it 4.43 out of 5 for intuitiveness and 4.71 out of 5 on likelihood to recommend it as a training and memorization tool.</p>
+									<p><strong>Experts preferred 3D to the method they were trained on.</strong> Roughly 69% said they would rather use the 3D tool than continue with traditional 2D methods &mdash; a notable result in a domain that is, by necessity, conservative about new technology. Participants specifically valued being able to point at the map to highlight elements and toggle layers on and off, and described the ability to study at home at any hour as the real unlock. Several were explicit that it should supplement, not replace, existing training.</p>
+									<p><strong>Enthusiasm and classroom endorsement are not the same thing.</strong> Half would recommend it in a collegiate or FAA academy classroom, but 37.5% said "maybe" and a small group said no &mdash; citing cost, distraction potential, redundancy with existing materials, and simulation sickness. Self-reported technical support needs sat at 3.0 out of 5 even among experts, which told us tutorials are required beyond baseline occupational knowledge. Positive perception was not sufficient evidence of deployment readiness.</p>
+									<p><strong>The most useful feedback was about spatial fidelity, not features.</strong> The recurring critique was that the tool renders 2D elements on a 3D layout &mdash; experts wanted actual altitude visualization, spatialized victor airways, terrain, and aircraft models, plus NAVAID and VORTAC locations that are critical to daily operations. Others asked for instructor affordances (highlight, bold, enlarge, hide) and assessment mechanics like fill-in-the-blank exercises. That's domain knowledge no non-expert test population could have surfaced.</p>
+									<p><strong>Friction clustered at setup and posture.</strong> The hardest parts weren't the map &mdash; they were getting used to the controls, tracking where their hands were, and having to look <em>down</em> at a map positioned beneath them rather than in front, which broke the mental model of how they actually study. Most participants hit hardware setup problems linking the headset to the laptop, and switching between the headset and the printed instruction sheet created its own friction &mdash; a direct argument for moving task instructions inside the VR interface. Extended sessions produced simulation sickness for some users.</p>
+								</section>
+							<h1 class="major">My Learnings</h1>
 								<section>
-                                    <p>xxx</p>
+									<p>This project taught me the value of testing with genuine domain experts rather than convenience samples. The jump from an "Average" score with novices to "Good" with certified controllers wasn't just a better build &mdash; it was that the experts' critiques were categorically different. Novices told us about buttons and text size; controllers told us the map was in the wrong place relative to how they actually study, and that missing altitude spatialization undercut the entire premise of going 3D. I also learned how much study logistics shape what you can claim: designing the protocol around shipping a self-contained kit meant the accessibility claim was tested rather than asserted, and the setup problems participants hit became findings in their own right instead of noise to be excluded.</p>
+								</section>
 						</div>
 					</section>
 
@@ -58,7 +73,7 @@
 			<footer id="footer" class="wrapper alt">
 				<div class="inner">
 					<ul class="menu">
-						<li>&copy; Tony C. Lee. All rights reserved.</li><li>Last updated: Jan 2026</li>
+						<li>&copy; Tony C. Lee. All rights reserved.</li><li>Last updated: Aug 2026</li>
 					</ul>
 				</div>
 			</footer>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Copilot</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">TELUS Digital | Fuel iX Copilots</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Goal</h1>
+							<span class="image fit"><img src="images/copilot.jpg" alt="" /></span>
+							<p>Fuel iX Copilots is an enterprise platform that lets employees build and use custom AI agents for their own work. I ran research across two connected questions: whether Copilots actually deliver on their productivity promise, and what stands between users and that value. The output was a mixed-methods meta-synthesis defining the core Jobs to be Done, plus a follow-on study of the Model Context Protocol (MCP) Alpha &mdash; the feature that let Copilots connect to external tools like Salesforce, Jira, and Google Workspace. Both fed directly into product backlog prioritization.</p>
+
+							<h1 class="major">Background</h1>
+								<section>
+									<p>By early 2025 Copilots had real traction inside the enterprise, and survey data confirmed users saw the value &mdash; attitude toward AI correlated moderately with perceived time saved (0.65). But adoption data and support tickets told a more complicated story: people understood that Copilots could help them, and still struggled to unlock that help. At the same time, the product team was under pressure to ship multi-agent orchestration and third-party integrations, the most-requested capability on the roadmap. The open strategic question was one of sequencing: build the ambitious agentic features users were asking for, or fix the single-agent experience first. Research needed to answer that with evidence rather than opinion.</p>
+								</section>
+							<h1 class="major">Methods</h1>
+								<section>
+									<h2>Participants</h2>
+									<p><strong>Meta-synthesis (Jan&ndash;Jul 2025):</strong> two surveys (N=178 in January, N=33 in June), unmoderated usability studies (N=18), and in-depth interviews (N=6), supplemented by JIRA ticket analysis.</p>
+									<p><strong>MCP Alpha (Jun&ndash;Jul 2025):</strong> platform usage analytics across 21 active users, 151 Copilots, and 47 connected MCP servers, paired with three in-depth qualitative case studies spanning technical and non-technical roles.</p>
+									<hr />
+									<h2>Study Design</h2>
+									<p>The meta-synthesis integrated six months of separate studies into a single evidence base, triangulating quantitative signals (survey ratings, correlations, ticket volume) against qualitative interview themes so that each finding was corroborated across more than one method. Findings were then organized into Jobs to be Done, which reframed a scattered list of complaints as three prioritizable product bets &mdash; an opportunity, a risk, and a friction &mdash; each with tactical suggestions attached so the backlog team could act on them directly.</p>
+									<p>The MCP Alpha study paired behavioral analytics with case-study interviews. Usage data established what people actually connected and how heavily they used it; the case studies established why, and where setup broke down. Each case was structured identically (role, problem, solution, impact, challenges, feedback) so patterns could be compared across a highly technical AI engineer, a business development consultant, and a customer success director.</p>
+								</section>
+							<h1 class="major">Insights</h1>
+								<section>
+									<p>The headline finding was a sequencing argument. Users clearly wanted multi-agent workflows &mdash; chaining Copilots together, integrating with the tools they already lived in &mdash; but the single-agent experience had unresolved fundamentals: a moderate-to-high learning curve for 72% of respondents, system prompts that were hard to structure or iterate, no in-context explanation of which model to use or why, confusion between the "My Copilots" and "Community" sections, intrusive modals and rigid layouts, and file uploads slow enough that one user spent days loading a document set. Building multi-agent orchestration on top of that foundation would compound confusion rather than deliver value, so the recommendation was to treat usability and user education as the top product priority, ahead of the more exciting agentic roadmap.</p>
+									<p>The MCP Alpha study reinforced that pattern at the integration layer. Where MCP worked, the impact was real &mdash; users automated ticket creation, CRM entry, weekly reporting, and meeting workflows, converting hours of manual work into review-and-approve. But the setup path was the bottleneck: unclear connection options, OAuth flows that hung, constant context-switching to a third-party orchestration tool, no scheduling for recurring tasks, and no way to share a working Copilot configuration with a teammate. Notably, even the most technical participant asked for a vetted registry and better documentation &mdash; a signal that this was a design problem, not a user-skill problem. That evidence shaped a two-phase plan: an Alpha expansion focused on enablement, security, and performance, followed by a Beta centered on redesigning the connection experience itself.</p>
+								</section>
+							<h1 class="major">My Learnings</h1>
+								<section>
+									<p>The most valuable thing I practiced here was synthesizing across studies rather than reporting one at a time. Any single survey or interview round could be argued with; six months of triangulated evidence pointing the same direction was much harder to dismiss, and that's what gave the "fix the foundation first" recommendation enough weight to influence roadmap sequencing. I also learned how much a framing choice matters &mdash; translating findings into Jobs to be Done turned a list of usability complaints into something a product team could prioritize against, which is ultimately what made the research get used instead of just read.</p>
+								</section>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Tony C. Lee. All rights reserved.</li><li>Last updated: Aug 2026</li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

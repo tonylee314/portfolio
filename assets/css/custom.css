@@ -1,0 +1,473 @@
+/*
+	Custom overrides for index.html
+	Loaded AFTER main.css so the HTML5 UP template file stays untouched.
+*/
+
+/* ---- Sidebar: 30% narrower (18em -> 12.6em), content shifted to match ---- */
+
+	#sidebar {
+		width: 12.6em;
+		padding: 2.5em 1.75em 1.75em 1.75em;
+	}
+
+	#sidebar + #wrapper,
+	#sidebar + #wrapper + #footer {
+		margin-left: 12.6em;
+	}
+
+	/* Nav sits at the top instead of vertically centred, so the links
+	   don't cluster in the middle of a tall column. */
+	#sidebar > .inner {
+		-moz-justify-content: flex-start;
+		-webkit-justify-content: flex-start;
+		-ms-justify-content: flex-start;
+		justify-content: flex-start;
+	}
+
+	/* --- Accessibility: the sidebar background is a light grey (#c5c0c0) but
+	   the template puts white text on it, giving 1.25:1 contrast. WCAG AA
+	   requires 4.5:1 for body text. Switched to dark text (5.5-9.4:1). --- */
+
+	#sidebar nav a {
+		color: rgba(0, 0, 0, 0.65);         /* 5.46:1 */
+	}
+
+		#sidebar nav a:hover {
+			color: rgba(0, 0, 0, 0.85);     /* 9.35:1 */
+		}
+
+	/* Visible keyboard focus for every sidebar control. */
+	#sidebar a:focus-visible,
+	.hero-resume:focus-visible {
+		outline: 3px solid #000000;
+		outline-offset: 3px;
+	}
+
+	/* Contact block pinned to the lower half of the sidebar. */
+	.sidebar-contact {
+		margin-top: auto;
+		padding-top: 2em;
+	}
+
+		/* Filled for contrast: white on maroon = 9.19:1, and the button
+		   itself sits at 5.11:1 against the sidebar (3:1 required). */
+		.resume-btn {
+			background-color: #861F41;
+			border: 1px solid #861F41;
+			border-radius: 0.35em;
+			color: #ffffff;
+			display: block;
+			font-size: 0.6em;
+			font-weight: bold;
+			letter-spacing: 0.2em;
+			line-height: 1.75;
+			padding: 1.1em 0.75em;
+			text-align: center;
+			text-decoration: none;
+			text-transform: uppercase;
+			-moz-transition: background-color 0.2s ease, border-color 0.2s ease;
+			-webkit-transition: background-color 0.2s ease, border-color 0.2s ease;
+			-ms-transition: background-color 0.2s ease, border-color 0.2s ease;
+			transition: background-color 0.2s ease, border-color 0.2s ease;
+		}
+
+			.resume-btn:hover,
+			.resume-btn:focus {
+				background-color: #5e1630;
+				border-color: #5e1630;
+				color: #ffffff;
+			}
+
+		.contact-list {
+			list-style: none;
+			margin: 1.5em 0 0 0;
+			padding: 0;
+		}
+
+			.contact-list li {
+				padding: 0;
+				margin: 0 0 0.75em 0;
+				border: 0;
+			}
+
+			.contact-list a {
+				border: 0;
+				color: rgba(0, 0, 0, 0.7);      /* 6.30:1 */
+				display: -moz-flex;
+				display: -webkit-flex;
+				display: -ms-flex;
+				display: flex;
+				-moz-align-items: center;
+				-webkit-align-items: center;
+				-ms-align-items: center;
+				align-items: center;
+				-moz-justify-content: flex-end;
+				-webkit-justify-content: flex-end;
+				-ms-justify-content: flex-end;
+				justify-content: flex-end;
+				font-size: 0.62em;
+				letter-spacing: 0.05em;
+				line-height: 1.6;
+				min-height: 2.2em;              /* comfortable tap target */
+				text-decoration: none;
+				-moz-transition: color 0.2s ease;
+				-webkit-transition: color 0.2s ease;
+				-ms-transition: color 0.2s ease;
+				transition: color 0.2s ease;
+			}
+
+				.contact-list a:hover {
+					color: #000000;
+				}
+
+				/* Icons are decorative (aria-hidden); the adjacent text
+				   carries the accessible name. */
+				.contact-list .icon {
+					-moz-order: 2;
+					-webkit-order: 2;
+					-ms-order: 2;
+					order: 2;
+					margin-left: 0.7em;
+					width: 1.35em;
+					text-align: center;
+					-moz-flex-shrink: 0;
+					-webkit-flex-shrink: 0;
+					-ms-flex-shrink: 0;
+					flex-shrink: 0;
+				}
+
+				.contact-list .contact-text {
+					-moz-order: 1;
+					-webkit-order: 1;
+					-ms-order: 1;
+					order: 1;
+					word-break: break-word;
+				}
+
+	/* --- Hero resume button: top-right of the home screen.
+	   Matches the sidebar background (#c5c0c0) with dark text:
+	   11.68:1 on text, 5.11:1 against the hero (#861F41). --- */
+
+	.hero-resume {
+		position: absolute;
+		top: 1.75em;
+		right: 1.75em;
+		z-index: 5;
+		width: auto;
+		display: inline-block;
+		padding: 1.1em 1.75em;
+		background-color: #c5c0c0;
+		border-color: #c5c0c0;
+		color: #000000;
+	}
+
+		.hero-resume:hover,
+		.hero-resume:focus {
+			background-color: #ffffff;
+			border-color: #ffffff;
+			color: #000000;
+		}
+
+	/* ---- Tablet: template collapses sidebar to a 3.5em top bar ---- */
+
+	@media screen and (max-width: 1280px) {
+
+		#sidebar {
+			width: 100%;
+			padding: 0;
+		}
+
+		#sidebar + #wrapper,
+		#sidebar + #wrapper + #footer {
+			margin-left: 0;
+		}
+
+		#sidebar > .inner {
+			-moz-justify-content: center;
+			-webkit-justify-content: center;
+			-ms-justify-content: center;
+			justify-content: center;
+		}
+
+		/* The bar is only 3.5em tall with overflow hidden — the contact
+		   block can't fit here, so it moves to the footer instead. */
+		.sidebar-contact {
+			display: none;
+		}
+
+	}
+
+	/* ---- Phone: template hides the sidebar entirely. Keep it so
+	        navigation still works, just more compact. ---- */
+
+	@media screen and (max-width: 736px) {
+
+		#sidebar {
+			display: block;
+		}
+
+			/* The template zeroes this out because it hides the sidebar here.
+			   Since the bar is back, the offset has to come back too or the
+			   content slides underneath it. */
+			#sidebar + #wrapper {
+				padding-top: 3.5em;
+			}
+
+			#sidebar nav ul li {
+				margin: 0 0 0 1.25em;
+			}
+
+			#sidebar nav a {
+				font-size: 0.55em;
+				letter-spacing: 0.15em;
+			}
+
+	}
+
+/* ---- Hero: reduce full-screen intro to leave room for photo ---- */
+
+	#intro.wrapper.fullscreen {
+		min-height: 62vh;
+	}
+
+	#intro > .inner {
+		padding: 3em 5em 2em 5em;
+		text-align: center;
+	}
+
+		#intro .actions {
+			-moz-justify-content: center;
+			-webkit-justify-content: center;
+			-ms-justify-content: center;
+			justify-content: center;
+		}
+
+		/* Degrees line — smaller and lighter than the role title
+		   so the hierarchy reads name > role > credentials. */
+		.hero-education {
+			font-size: 0.8em;
+			line-height: 1.7;
+			max-width: 34em;
+			margin: 0.75em auto 0 auto;
+			opacity: 0.8;
+		}
+
+			@media screen and (max-width: 736px) {
+
+				.hero-education {
+					font-size: 0.75em;
+				}
+
+			}
+
+	/* Profile photo */
+	.hero-photo {
+		display: block;
+		width: 9em;
+		height: 9em;
+		margin: 0 auto 1.25em auto;
+		border-radius: 100%;
+		object-fit: cover;
+		border: 3px solid rgba(255, 255, 255, 0.25);
+	}
+
+	@media screen and (max-width: 1680px) {
+
+		#intro > .inner {
+			padding: 3em 4em 2em 4em;
+		}
+
+	}
+
+	@media screen and (max-width: 1280px) {
+
+		#intro.wrapper.fullscreen {
+			min-height: calc(62vh - 2.5em);
+		}
+
+	}
+
+	@media screen and (max-width: 736px) {
+
+		#intro.wrapper.fullscreen {
+			min-height: 0;
+		}
+
+		#intro > .inner {
+			padding: 2em 2em 1em 2em;
+		}
+
+		.hero-photo {
+			width: 8.5em;
+			height: 8.5em;
+			margin-bottom: 1.25em;
+		}
+
+	}
+
+/* ---- Spotlights: tighter project rows, proportionally smaller images ---- */
+
+	.spotlights > section {
+		min-height: 11.25em;
+	}
+
+		.spotlights > section > .image {
+			width: 19em;
+		}
+
+		.spotlights > section > .content {
+			padding: 2em 3.5em 1.25em 3.5em;
+		}
+
+		/* Continue the alternating tint across all six projects
+		   (template only styles the 2nd and 3rd). */
+		.spotlights > section:nth-child(4) {
+			background-color: rgba(0, 0, 0, 0.15);
+		}
+
+		.spotlights > section:nth-child(5) {
+			background-color: rgba(0, 0, 0, 0.2);
+		}
+
+		.spotlights > section:nth-child(6) {
+			background-color: rgba(0, 0, 0, 0.25);
+		}
+
+		@media screen and (max-width: 1680px) {
+
+			.spotlights > section > .content {
+				padding: 2em 3em 1.25em 3em;
+			}
+
+		}
+
+		@media screen and (max-width: 980px) {
+
+			.spotlights > section > .image {
+				width: 100%;
+				height: 32vh;
+			}
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			.spotlights > section > .image {
+				height: 32vh;
+				min-height: 12em;
+			}
+
+			.spotlights > section > .content {
+				padding: 2em 2em 1em 2em;
+			}
+
+		}
+
+/* ---- Remaining sections: trim vertical padding ---- */
+
+	#two > .inner {
+		padding: 3em 5em 2em 5em;
+	}
+
+	@media screen and (max-width: 1680px) {
+
+		#two > .inner {
+			padding: 3em 4em 2em 4em;
+		}
+
+	}
+
+	@media screen and (max-width: 736px) {
+
+		#two > .inner {
+			padding: 2em 2em 1em 2em;
+		}
+
+	}
+
+/* ---- Footer contact: mobile/tablet fallback for the sidebar block ---- */
+
+	.footer-contact {
+		display: none;
+	}
+
+	@media screen and (max-width: 1280px) {
+
+		.footer-contact {
+			display: block;
+			margin-bottom: 0.5em;
+		}
+
+			.footer-contact a {
+				border-bottom-color: rgba(255, 255, 255, 0.3);
+				color: rgba(255, 255, 255, 0.55);
+			}
+
+				.footer-contact a:hover {
+					color: #ffffff;
+				}
+
+	}
+
+/* ---- Hero resume button: responsive sizing ---- */
+
+	@media screen and (max-width: 1280px) {
+
+		.hero-resume {
+			top: 1.25em;
+			right: 1.25em;
+			padding: 0.9em 1.4em;
+		}
+
+	}
+
+	@media screen and (max-width: 736px) {
+
+		/* Static on phones so it can't collide with the nav bar or
+		   overlap the headshot on a narrow screen. */
+		.hero-resume {
+			position: static;
+			display: block;
+			width: 100%;
+			max-width: 16em;
+			margin: 1.5em auto 0 auto;
+			padding: 1.1em 1.5em;
+		}
+
+	}
+
+/* ---- Respect reduced-motion preferences ---- */
+
+	@media (prefers-reduced-motion: reduce) {
+
+		.resume-btn,
+		.contact-list a,
+		#sidebar nav a {
+			-moz-transition: none;
+			-webkit-transition: none;
+			-ms-transition: none;
+			transition: none;
+		}
+
+	}
+
+/* ---- Template attribution: required by the HTML5 UP CCA 3.0 licence,
+        kept deliberately quiet. ---- */
+
+	.credit {
+		font-size: 0.6em;
+		line-height: 1.5;
+		letter-spacing: 0.05em;
+		margin: 0.75em 0 0 0;
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+		.credit a {
+			border-bottom-color: rgba(255, 255, 255, 0.25);
+			color: inherit;
+		}
+
+			.credit a:hover {
+				color: rgba(255, 255, 255, 0.85);
+				border-bottom-color: rgba(255, 255, 255, 0.5);
+			}

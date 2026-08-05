@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fortify</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">TELUS Digital | Fuel iX Fortify</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Goal</h1>
+							<span class="image fit"><img src="images/fortify.jpg" alt="" /></span>
+							<p>Fuel iX Fortify is a B2B enterprise product for automated AI red-teaming &mdash; adversarial testing that surfaces security and safety vulnerabilities in AI models and agents. I led two connected research streams to support Fortify's product and go-to-market strategy: a UX competitive audit benchmarking how rival red-teaming tools present findings to users, and a market analysis mapping the competitive landscape against the newly published OWASP Agentic Top 10 framework.</p>
+
+							<ul class="actions">
+								<li><a href="https://ai-red-team-ux-audit.netlify.app/" target="_blank" class="button">View Full UX Audit Report</a></li>
+								<li><a href="https://luxury-cactus-afa342.netlify.app/" target="_blank" class="button">View Full Market Analysis Report</a></li>
+							</ul>
+
+							<h1 class="major">Background</h1>
+								<section>
+									<p>AI red-teaming is a fast-moving category, and the tools in it inherit a hard UX problem: the output is dense, technical vulnerability data that has to be understood by both security engineers and non-technical business stakeholders. At the same time, the risk landscape itself was shifting &mdash; the OWASP Agentic Top 10 had just been published to classify the distinct risks introduced by autonomous, tool-using AI agents, separate from single-model LLM risk. Fortify's leadership needed to know two things: how well competitors were solving the comprehension-and-actionability problem in their UI, and where the market's actual security coverage stood against this new framework &mdash; so Fortify could prioritize its roadmap and market position accordingly.</p>
+								</section>
+							<h1 class="major">Methods</h1>
+								<section>
+									<h2>Participants</h2>
+									<p><strong>UX audit:</strong> 6 participants across 2 design-workshop sessions, reviewing the publicly available UIs of 6 direct AI red-teaming competitors.</p>
+									<p><strong>Market analysis:</strong> desk research across 5 vendors spanning pure-play red-teaming tools and larger security platforms with red-teaming modules.</p>
+									<hr />
+									<h2>Study Design</h2>
+									<p>The UX audit used a qualitative, workshop-driven approach. I ran two structured sessions where participants evaluated competitor products against two research questions &mdash; how effectively they visualize findings, and how well they help users act on them. Observations were deductively coded into five categories, then refined inductively as new themes emerged, and standout features were flagged separately. A 2&times;2 mapping exercise (organized/disorganized &times; easy/difficult to understand) let participants independently rank competitors and surface points of agreement and disagreement.</p>
+									<p>The market analysis mapped each competitor's publicly documented red-teaming capabilities against the 10 risk categories in the OWASP Agentic Top 10 (primary, secondary, or no coverage), cross-referenced against a third-party agent-risk scoring model, and translated into a business-facing "4 harms" framework so findings could be communicated to non-technical stakeholders, not just security teams.</p>
+								</section>
+							<h1 class="major">Insights</h1>
+								<section>
+									<p>The UX audit found that every competitor optimized for data completeness over comprehension &mdash; dense visualizations (some diagram types were called out as effectively unreadable), unexplained scoring logic, and recommendations that restated findings instead of guiding a fix. The clearest gap: none of the six tools closed the loop from "here's a vulnerability" to "here's what it means for your business and what to do about it" &mdash; a gap felt most acutely by non-technical stakeholders. One competitor stood out clearly for pairing a simple, guided interface with inline remediation actions, and became a useful UX benchmark for Fortify's own design roadmap.</p>
+									<p>The market analysis found that competitor coverage of the OWASP Agentic Top 10 clusters heavily around risk categories that resemble existing LLM and AppSec testing patterns &mdash; not necessarily the most dangerous categories. Several structurally novel agentic risks, like inter-agent communication and cascading multi-agent failures, were essentially untested industry-wide, largely because testing them requires a multi-agent harness nobody had built yet. That gap, combined with the finding that no competitor translates technical findings into business-impact language, pointed to concrete opportunities for Fortify to differentiate.</p>
+								</section>
+							<h1 class="major">My Learnings</h1>
+								<section>
+									<p>This project stretched me across two very different research modes in the same engagement &mdash; running hands-on qualitative workshops with real participants, and doing structured, framework-driven competitive research &mdash; and then synthesizing both into recommendations that two different audiences, design and product/marketing, could act on. I got much more comfortable translating dense technical security concepts into language a non-technical stakeholder or a business decision could use, which is a skill I think matters more as AI products get harder to explain to the people buying them.</p>
+								</section>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Tony C. Lee. All rights reserved.</li><li>Last updated: Aug 2026</li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

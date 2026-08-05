@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>XR Safety Training Module</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">Technology-enhanced Learning and Online Strategies (TLOS)</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Goal</h1>
+							<span class="image fit"><img src="images/xr.jpg" alt="" /></span>
+							<p>Fire extinguisher certification is required before anyone at the university can work in a lab or do maintenance work &mdash; and it's delivered as a web module nobody can practice. I led the end-to-end creation of a VR alternative: scoping and contracting an external developer, running iterative usability cycles on the build, and then testing whether the finished module actually outperformed the traditional training on learning and confidence. The deliberate design choice was to build a <em>supplemental</em> scenario-based tool rather than a full digital twin.</p>
+
+							<ul class="actions">
+								<li><a href="https://www.researchgate.net/publication/395245297_Advancing_Pedagogical_Innovation_Educational_Supplemental_XR_Module_Guide" target="_blank" class="button">HCI International 2025 Paper</a></li>
+								<li><a href="xrcop.html" class="button">Related: Stakeholder Study</a></li>
+							</ul>
+
+							<h1 class="major">Background</h1>
+								<section>
+									<p>Safety training is a near-ideal XR use case: the whole point is rehearsing a high-stakes procedure you can't safely rehearse for real. But the university had no in-house XR development capacity available on the needed timeline, and prior institutional survey data showed most internal XR builds took six to twelve months or longer, with student workers as the most common development resource &mdash; a workforce that graduates and takes its expertise with it. Going external promised speed and professional quality at the cost of vendor dependency and reduced control. Documenting that tradeoff honestly, rather than just shipping the module, was part of the research goal.</p>
+								</section>
+							<h1 class="major">Methods</h1>
+								<section>
+									<h2>Participants</h2>
+									<p><strong>Usability feedback:</strong> 14 faculty and staff across two structured sessions reviewed the working build and surfaced design issues that fed directly into the iteration cycles.</p>
+									<p><strong>Efficacy study:</strong> 22 participants spanning students, faculty, and staff from a wide range of disciplines.</p>
+									<hr />
+									<h2>Study Design</h2>
+									<p><strong>Development.</strong> I served as the translator between instruction and implementation &mdash; converting safety syllabus objectives into concrete interaction specifications, researching the domain content the developer needed to build accurate mechanics, and mediating between stakeholders' ideal features and what was actually buildable. The module was scoped to two activities: hazard identification in a virtual environment, and a scenario-based assessment where the user decides whether to extinguish an active fire or evacuate. A functional prototype landed within roughly a week of kickoff; multiple structured iteration cycles followed. Because the iteration budget was finite, I ranked every feedback item by priority so the developer could triage &mdash; critical bugs first, then UX, then cosmetic.</p>
+									<p><strong>Efficacy testing.</strong> A within-subject counterbalanced mixed-methods design. Participants were randomly assigned to complete either the traditional web training or the VR module first, then crossed over to the other. Measures included quiz performance after each condition, time-to-completion, the New General Self-Efficacy scale administered at three points (baseline, post-first condition, post-second condition), the Technology Acceptance Model questionnaire for faculty and staff, and open-ended engagement questions analyzed thematically.</p>
+								</section>
+							<h1 class="major">Insights</h1>
+								<section>
+									<p><strong>Confidence moved, and it moved specifically after VR.</strong> Self-efficacy scores were essentially flat after traditional training but rose meaningfully after the VR condition. Over 90% of participants reported the XR training positively influenced their self-efficacy; the remainder reported no change, and not a single participant reported a negative effect. For a procedure where the failure mode is freezing under pressure, confidence is arguably the outcome that matters most.</p>
+									<p><strong>Time-on-task exposed a problem with the existing training.</strong> The traditional module is advertised as roughly an hour. Participants finished it in about 12 minutes on average &mdash; because the format lets you skip. They spent about 27 minutes in the VR module, which is structured and sequential and gives you nowhere to skip to. That's a finding about the incumbent training as much as the new one: when completion is tied to mandatory certification and there are no consequences for skimming, the delivery format quietly undermines the learning objective.</p>
+									<p><strong>Positive perception did not equal intent to adopt.</strong> Faculty and staff rated the module's usefulness highly and averaged 4.18 on supporting it as an official training tool &mdash; yet behavioral intention to actually use XR in their own teaching sat at only 2.9 out of 5. That gap is the real adoption story: people are convinced by the tool and still blocked by time, training, and institutional support. Enthusiasm was never the bottleneck.</p>
+									<p><strong>Engagement and discomfort came from the same source.</strong> Thematic analysis of open responses put interactivity and immersion at the top of what kept people engaged, followed by hands-on scenario-based learning, realism, and sensory feedback. The leading negative was simulation sickness, followed by cognitive overload and control friction. The immersion doing the pedagogical work is the same immersion making a subset of users physically uncomfortable &mdash; which is precisely why multi-modal alternatives aren't optional.</p>
+									<p><strong>Usability iteration was where the module got usable.</strong> Testing surfaced issues that would have quietly degraded the experience: information panels sized and positioned so they obscured the environment, a sequencing bug that hard-blocked progress if a user pulled the extinguisher pin early, missing restart and back navigation, and an evacuation time threshold calibrated too strictly for first-time VR users. Continued review after launch caught additional bugs before formal data collection began &mdash; including one that made an activity uncompletable &mdash; which protected the study's validity.</p>
+								</section>
+							<h1 class="major">My Learnings</h1>
+								<section>
+									<p>This project taught me what it actually takes to get a research-grade product built on a real budget and timeline. Precision upstream was worth more than effort downstream &mdash; a detailed design document before the first vendor conversation shaped both the price and the quality of what came back, while every ambiguity left unresolved at scoping cost an iteration cycle later. I also had to get comfortable saying no: when a usability expert proposed a genuinely good feature late in the process, the honest answer was that it exceeded scope and the budget was better spent on the sequencing bug blocking users entirely. Prioritizing well within real constraints turned out to be more of the job than generating ideas.</p>
+								</section>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Tony C. Lee. All rights reserved.</li><li>Last updated: Aug 2026</li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

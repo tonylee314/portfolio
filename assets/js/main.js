@@ -47,7 +47,10 @@
 	// Sidebar.
 		if ($sidebar.length > 0) {
 
-			var $sidebar_a = $sidebar.find('a');
+			// Scoped to nav links only. A plain find('a') also picks up the
+			// contact/resume links, whose hrefs (mailto:, tel:, *.pdf) are
+			// invalid jQuery selectors and throw at $(id) further down.
+			var $sidebar_a = $sidebar.find('nav a');
 
 			$sidebar_a
 				.addClass('scrolly')
