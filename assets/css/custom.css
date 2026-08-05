@@ -573,18 +573,24 @@
 		   readers to hear item type before title — can be visually
 		   reordered to the bottom-right corner without the overlap
 		   risk of absolute positioning. */
+		/* Grid, not flex: a grid places children by named area regardless
+		   of source order, so the tag (first in the markup, for screen
+		   readers to hear item type before title) can share the meta
+		   line's row visually without an extra stacked block. */
+		/* Content column caps at ~75% so a long title wraps well short
+		   of the tag's column rather than running edge to edge; the
+		   tag spans all three rows and self-aligns to the top. */
 		.publications > li {
 			border-top: solid 1px rgba(255, 255, 255, 0.15);
-			display: -moz-flex;
-			display: -webkit-flex;
-			display: -ms-flex;
-			display: flex;
-			-moz-flex-direction: column;
-			-webkit-flex-direction: column;
-			-ms-flex-direction: column;
-			flex-direction: column;
+			display: -ms-grid;
+			display: grid;
+			grid-template-columns: 3fr 1fr;
+			grid-template-areas: "title tag" "authors tag" "meta tag";
+			-moz-column-gap: 1em;
+			column-gap: 1em;
+			align-items: start;
 			margin: 0;
-			padding: 1.5em 0;
+			padding: 1em 0;
 		}
 
 			.publications > li:first-child {
@@ -596,23 +602,23 @@
 		   existing maroon/white pairing rather than introducing new
 		   ones — same contrast ratios already validated elsewhere. */
 		.pub-tag {
-			-moz-order: 4;
-			-webkit-order: 4;
-			-ms-order: 4;
-			order: 4;
-			-moz-align-self: flex-end;
-			-webkit-align-self: flex-end;
-			-ms-align-self: flex-end;
-			align-self: flex-end;
+			grid-area: tag;
+			-moz-align-self: start;
+			-ms-align-self: start;
+			align-self: start;
+			-moz-justify-self: end;
+			-ms-justify-self: end;
+			justify-self: end;
 			border-radius: 999px;
 			display: inline-block;
 			font-size: 0.62em;
 			font-weight: bold;
 			letter-spacing: 0.1em;
 			line-height: 1;
-			margin: 0.75em 0 0 0;
+			margin: 0;
 			padding: 0.45em 0.9em;
 			text-transform: uppercase;
+			white-space: nowrap;
 		}
 
 			.pub-tag-journal {
@@ -636,9 +642,10 @@
 			}
 
 		.pub-title {
+			grid-area: title;
 			font-size: 0.9em;
 			line-height: 1.5;
-			margin: 0 0 0.4em 0;
+			margin: 0 0 0.3em 0;
 		}
 
 			.pub-title a {
@@ -665,6 +672,7 @@
 				}
 
 		.pub-authors {
+			grid-area: authors;
 			color: rgba(255, 255, 255, 0.8);
 			font-size: 0.8em;
 			line-height: 1.6;
@@ -679,6 +687,7 @@
 		/* 0.8 white on #8a3652 is ~6:1; the template's default body
 		   colour would land near 3:1, under WCAG AA. */
 		.pub-meta {
+			grid-area: meta;
 			color: rgba(255, 255, 255, 0.8);
 			font-size: 0.8em;
 			line-height: 1.6;
@@ -699,6 +708,23 @@
 					border-bottom-color: #ffffff;
 					color: #ffffff;
 				}
+
+		/* A side tag column has no room on a phone width, so drop to one
+		   column; the tag keeps its top-right placement by sitting on
+		   its own right-aligned line above the title. */
+		@media screen and (max-width: 736px) {
+
+			.publications > li {
+				grid-template-columns: 1fr;
+				grid-template-areas: "tag" "title" "authors" "meta";
+			}
+
+			.pub-tag {
+				justify-self: end;
+				margin: 0 0 0.5em 0;
+			}
+
+		}
 
 /* ---- Hero resume button: responsive sizing ---- */
 
