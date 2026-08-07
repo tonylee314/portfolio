@@ -54,35 +54,39 @@
 					<section id="intro" class="wrapper style1 fullscreen fade-up">
 						<a href="assets/Lee_T_Resume.pdf" target="_blank" rel="noopener" class="resume-btn hero-resume" aria-label="View resume (PDF, opens in a new tab)">View Resume</a>
 						<div class="inner">
-							<img src="images/profile.jpg" alt="Tony Lee" class="hero-photo" />
-							<h1>Tony Lee</h1>
-							<p class="hero-role">Product | UX Researcher</p>
-							<ul class="hero-contact">
-								<li>
-									<a href="mailto:junkyu40@gmail.com">
-										<span class="icon solid fa-envelope" aria-hidden="true"></span>
-										<span class="contact-text">junkyu40@gmail.com</span>
-									</a>
-								</li>
-								<li>
-									<a href="tel:+15183161708">
-										<span class="icon solid fa-phone" aria-hidden="true"></span>
-										<span class="contact-text">(518) 316-1708</span>
-									</a>
-								</li>
-								<li>
-									<a href="https://www.linkedin.com/in/tonylee314/" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in a new tab)">
-										<span class="icon brands fa-linkedin-in" aria-hidden="true"></span>
-										<span class="contact-text">in/tonylee314</span>
-									</a>
-								</li>
-							</ul>
-							<ul class="hero-education">
-								<li>Ph.D. Cognitive Engineering</li>
-								<li>M.S. Human Factors Engineering &amp; Ergonomics</li>
-								<li>B.S. Industrial &amp; Systems Engineering | HCI
-								</li>
-							</ul>
+							<div class="hero-layout">
+								<img src="images/profile.jpg" alt="Tony Lee" class="hero-photo" />
+								<div class="hero-text">
+									<h1>Tony Lee</h1>
+									<p class="hero-role">Product | UX Researcher</p>
+									<ul class="hero-contact">
+										<li>
+											<a href="mailto:junkyu40@gmail.com">
+												<span class="icon solid fa-envelope" aria-hidden="true"></span>
+												<span class="contact-text">junkyu40@gmail.com</span>
+											</a>
+										</li>
+										<li>
+											<a href="tel:+15183161708">
+												<span class="icon solid fa-phone" aria-hidden="true"></span>
+												<span class="contact-text">(518) 316-1708</span>
+											</a>
+										</li>
+										<li>
+											<a href="https://www.linkedin.com/in/tonylee314/" target="_blank" rel="noopener" aria-label="LinkedIn profile (opens in a new tab)">
+												<span class="icon brands fa-linkedin-in" aria-hidden="true"></span>
+												<span class="contact-text">in/tonylee314</span>
+											</a>
+										</li>
+									</ul>
+									<p class="hero-school">Virginia Tech</p>
+									<ul class="hero-education">
+										<li>Ph.D. Cognitive Engineering</li>
+										<li>M.S. Human Factors Engineering &amp; Ergonomics</li>
+										<li>B.S. Industrial &amp; Systems Engineering | HCI</li>
+									</ul>
+								</div>
+							</div>
 						</div>
 					</section>
 
@@ -165,41 +169,104 @@
 				<!-- Two -->
 					<section id="two" class="wrapper style3 fade-up">
 						<div class="inner">
+
 							<h2>Other Projects</h2>
-							<p>Academic Lab & Class Research Projects:</p>
-							<div class="features">
-								<section>
-									<span class="icon solid major fa-car"></span>
-									<h3>XR Vehicle Productivity [UK]</h3>
-									<p> [University of Nottingham] Investigated the effect of eXtended Reality (XR) non-driving related tasks (NDRT) on driver situational awareness.</p>
-									<ul class="actions">
-										<li><a href="uon.html" class="button">Learn more</a></li>
-									</ul>
-								</section>
-								<section>
-									<span class="icon solid major fa-file"></span>
-									<h3>VR Teams Productivity</h3>
-									<p>Evaluated the usability of multiple VR team productivity platforms and investigated its integration potential.</p>
-									<ul class="actions">
-										<li><a href="vrteams.html" class="button">Learn more</a></li>
-									</ul>
-								</section>
-								<section>
-									<span class="icon solid major fa-phone"></span>
-									<h3>TimeOff Mobile App</h3>
-									<p>Designed a parental control mobile app that restricts children's access to social media platforms.</p>
-									<ul class="actions">
-										<li><a href="timeoff.html" class="button">Learn more</a></li>
-									</ul>
-								</section>
-								<section>
-									<span class="icon solid major fa-id-card"></span>
-									<h3>CARID System</h3>
-									<p>Designed a Lv.3 AV center information display system that allows users to customize their driving experience. </p>
-									<ul class="actions">
-										<li><a href="carid.html" class="button">Learn more</a></li>
-									</ul>
-								</section>
+
+							<!-- Hover tabs. The tab list and every panel are in the markup;
+							     project-tabs.js only toggles .is-active and the ARIA state, so
+							     with JS off the first panel still shows and each project is
+							     reachable through its own page. To add a project, append a
+							     <button> to .tabs-list and a matching .tabs-panel, keeping the
+							     id/aria-controls pair unique.
+
+							     The lead-in line sits inside .tabs-side rather than above
+							     .tabs so the panel stretches the full height of the left
+							     column — from the top of that line to the bottom of the
+							     last tab.
+
+							     .tabs-panel-media is a placeholder: no artwork exists for
+							     these four projects yet. Drop a square image in images/ and
+							     swap the div for
+							         <img src="images/NAME.jpg" alt="" class="tabs-panel-media" />
+							     — the CSS sizes either one identically. -->
+
+							<div class="tabs" data-tabs>
+								<div class="tabs-side">
+									<p>Lab &amp; Class Projects:</p>
+									<div class="tabs-list" role="tablist" aria-label="Other projects">
+										<button type="button" class="tabs-tab is-active" role="tab" id="tab-uon" aria-controls="panel-uon" aria-selected="true" tabindex="0">
+											<span class="icon solid fa-car" aria-hidden="true"></span>
+											<span class="tabs-tab-label">XR Vehicle Productivity [UK]</span>
+										</button>
+										<button type="button" class="tabs-tab" role="tab" id="tab-vrteams" aria-controls="panel-vrteams" aria-selected="false" tabindex="-1">
+											<span class="icon solid fa-vr-cardboard" aria-hidden="true"></span>
+											<span class="tabs-tab-label">VR Teams Productivity</span>
+										</button>
+										<button type="button" class="tabs-tab" role="tab" id="tab-timeoff" aria-controls="panel-timeoff" aria-selected="false" tabindex="-1">
+											<span class="icon solid fa-phone" aria-hidden="true"></span>
+											<span class="tabs-tab-label">TimeOff Mobile App</span>
+										</button>
+										<button type="button" class="tabs-tab" role="tab" id="tab-carid" aria-controls="panel-carid" aria-selected="false" tabindex="-1">
+											<span class="icon solid fa-id-card" aria-hidden="true"></span>
+											<span class="tabs-tab-label">CARID System</span>
+										</button>
+									</div>
+								</div>
+
+								<div class="tabs-panels">
+									<div class="tabs-panel is-active" role="tabpanel" id="panel-uon" aria-labelledby="tab-uon">
+										<div class="tabs-panel-media" aria-hidden="true"></div>
+										<div class="tabs-panel-body">
+											<h3 class="tabs-panel-title">
+												<span class="icon solid fa-car" aria-hidden="true"></span>
+												<span>XR Vehicle Productivity [UK]</span>
+											</h3>
+											<p>[University of Nottingham] Investigated the effect of eXtended Reality (XR) non-driving related tasks (NDRT) on driver situational awareness.</p>
+											<ul class="actions">
+												<li><a href="uon.html" class="button">Learn more</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="tabs-panel" role="tabpanel" id="panel-vrteams" aria-labelledby="tab-vrteams" hidden>
+										<div class="tabs-panel-media" aria-hidden="true"></div>
+										<div class="tabs-panel-body">
+											<h3 class="tabs-panel-title">
+												<span class="icon solid fa-vr-cardboard" aria-hidden="true"></span>
+												<span>VR Teams Productivity</span>
+											</h3>
+											<p>Evaluated the usability of multiple VR team productivity platforms and investigated its integration potential.</p>
+											<ul class="actions">
+												<li><a href="vrteams.html" class="button">Learn more</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="tabs-panel" role="tabpanel" id="panel-timeoff" aria-labelledby="tab-timeoff" hidden>
+										<div class="tabs-panel-media" aria-hidden="true"></div>
+										<div class="tabs-panel-body">
+											<h3 class="tabs-panel-title">
+												<span class="icon solid fa-phone" aria-hidden="true"></span>
+												<span>TimeOff Mobile App</span>
+											</h3>
+											<p>Designed a parental control mobile app that restricts children's access to social media platforms.</p>
+											<ul class="actions">
+												<li><a href="timeoff.html" class="button">Learn more</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="tabs-panel" role="tabpanel" id="panel-carid" aria-labelledby="tab-carid" hidden>
+										<div class="tabs-panel-media" aria-hidden="true"></div>
+										<div class="tabs-panel-body">
+											<h3 class="tabs-panel-title">
+												<span class="icon solid fa-id-card" aria-hidden="true"></span>
+												<span>CARID System</span>
+											</h3>
+											<p>Designed a Lv.3 AV center information display system that allows users to customize their driving experience.</p>
+											<ul class="actions">
+												<li><a href="carid.html" class="button">Learn more</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</section>
@@ -283,6 +350,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="assets/js/project-tabs.js"></script>
 
 	</body>
 </html>

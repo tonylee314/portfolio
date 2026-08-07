@@ -238,6 +238,33 @@
 
 /* ---- Hero: reduce full-screen intro to leave room for photo ---- */
 
+	/* The hero (style1, #861F41) and the first project row (style2 #8a3652
+	   under a 5% black overlay, ~#833250) landed within a couple of percent
+	   of each other, so the two bands read as one continuous block. A deep
+	   plum-to-maroon gradient, darker than anything in the spotlights,
+	   separates them. Both stops are colours the site already uses — the
+	   body purple (#312450) and the resume button's hover maroon (#5e1630) —
+	   so no new hues enter the palette.
+
+	   The url() also corrects the template's path: the texture ships at
+	   assets/css/image/intro.svg but main.css asks for images/intro.svg,
+	   so the diagonal line overlay never loaded. */
+
+	#intro {
+		background-color: #3a1a35;
+		background-image:
+			url("image/intro.svg"),
+			-webkit-linear-gradient(115deg, #2a1f42 0%, #451a36 55%, #5e1630 100%);
+		background-image:
+			url("image/intro.svg"),
+			linear-gradient(115deg, #2a1f42 0%, #451a36 55%, #5e1630 100%);
+		background-attachment: scroll;
+		background-position: top right, center center;
+		background-repeat: no-repeat, no-repeat;
+		background-size: 100% 100%, cover;
+		border-bottom: solid 2px rgba(255, 255, 255, 0.15);
+	}
+
 	#intro.wrapper.fullscreen {
 		min-height: 62vh;
 	}
@@ -254,8 +281,23 @@
 			justify-content: center;
 		}
 
+		/* Institution, heading the degree list. Sits between the role and
+		   the credentials in the hierarchy: bold and full white, but
+		   smaller than the role.
+
+		   The ID is load-bearing — main.css sizes every #intro p at 1.25em
+		   (specificity 1,0,1), which a bare .hero-school could not outrank
+		   no matter where it appears in the file. */
+		#intro .hero-school {
+			color: #ffffff;
+			font-size: 1em;
+			font-weight: bold;
+			letter-spacing: 0.02em;
+			margin: 0 0 0.35em 0;
+		}
+
 		/* Degrees — smaller and lighter than the role title so the
-		   hierarchy reads name > role > credentials. Bulleted, but
+		   hierarchy reads name > role > school > credentials. Bulleted, but
 		   centred as a block with the text left-aligned inside, since
 		   centred list markers read as ragged. */
 		.hero-education {
@@ -267,7 +309,11 @@
 			margin: 0.75em 0 0 0;
 			padding-left: 1.15em;
 			text-align: left;
-			opacity: 0.8;
+			/* An explicit colour rather than opacity: the body colour is
+			   already rgba(255,255,255,0.55), and dimming that again landed
+			   at 3.6:1 against the lightest gradient stop. 0.6 white is
+			   5.5:1 there and still reads lighter than the role above it. */
+			color: rgba(255, 255, 255, 0.6);
 		}
 
 			.hero-education li {
@@ -452,6 +498,113 @@
 
 	}
 
+/* ---- Hero layout: photo left, identity right (tablet + desktop).
+
+	   Below 737px .hero-layout stays a plain block, so the phone keeps the
+	   centred stack it already had. These rules come last on purpose — the
+	   blocks above set .hero-photo, #intro > .inner and the fullscreen
+	   min-height at equal specificity, and media queries don't break ties. ---- */
+
+	@media screen and (min-width: 737px) {
+
+		/* The row is only as tall as the headshot now, so the old 62vh left
+		   a band of empty maroon beneath it. */
+		#intro.wrapper.fullscreen {
+			min-height: 40vh;
+		}
+
+		#intro > .inner {
+			padding: 2.5em 5em;
+		}
+
+		.hero-layout {
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
+			-moz-align-items: center;
+			-webkit-align-items: center;
+			-ms-align-items: center;
+			align-items: center;
+			-moz-justify-content: center;
+			-webkit-justify-content: center;
+			-ms-justify-content: center;
+			justify-content: center;
+			text-align: left;
+		}
+
+			.hero-photo {
+				margin: 0 4em 0 0;
+				-moz-flex-shrink: 0;
+				-webkit-flex-shrink: 0;
+				-ms-flex-shrink: 0;
+				flex-shrink: 0;
+			}
+
+			/* Capped so the degree lines wrap against the name rather than
+			   running to the edge of the 75em content column. */
+			.hero-text {
+				max-width: 30em;
+			}
+
+				/* Tighter than the template's stacked defaults — the block
+				   should read as one identity card, not three paragraphs. */
+				.hero-text h1 {
+					margin-bottom: 0.15em;
+				}
+
+				.hero-text .hero-role {
+					margin-bottom: 0.6em;
+				}
+
+				.hero-text .hero-education {
+					margin-top: 0;
+				}
+
+				/* The centred variant below 1280px is for the phone stack;
+				   here the links line up with the name above them. */
+				.hero-text .hero-contact {
+					-moz-justify-content: flex-start;
+					-webkit-justify-content: flex-start;
+					-ms-justify-content: flex-start;
+					justify-content: flex-start;
+					margin-bottom: 0.6em;
+				}
+
+					.hero-text .hero-contact li:first-child {
+						padding-left: 0;
+					}
+
+	}
+
+		@media screen and (min-width: 737px) and (max-width: 1680px) {
+
+			#intro > .inner {
+				padding: 2.5em 4em;
+			}
+
+		}
+
+		/* Sidebar has collapsed to a top bar — tighter gutters, and a
+		   smaller headshot so the two columns stay balanced. */
+		@media screen and (min-width: 737px) and (max-width: 1280px) {
+
+			#intro.wrapper.fullscreen {
+				min-height: calc(40vh - 2.5em);
+			}
+
+			#intro > .inner {
+				padding: 2.5em 3em;
+			}
+
+			.hero-photo {
+				width: 10.5em;
+				height: 10.5em;
+				margin-right: 3em;
+			}
+
+		}
+
 /* ---- Spotlights: tighter project rows, proportionally smaller images ---- */
 
 	.spotlights > section {
@@ -534,6 +687,340 @@
 		}
 
 	}
+
+/* ---- Other Projects: hover tabs ----
+
+	   A vertical tab rail on the left, one content panel on the right, the
+	   panel following the pointer. Same shape as the Framer "Tabs card"
+	   component, rebuilt natively — that module is a React/framer-motion ES
+	   module importing bare specifiers, so dropping it in would mean React,
+	   framer-motion and Framer's own runtime on a page that otherwise ships
+	   jQuery, plus content living in JS props instead of markup.
+
+	   The panels are stacked in one grid cell so the tallest one sets the
+	   height and switching tabs never reflows the section. ---- */
+
+	.tabs {
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		-moz-align-items: stretch;
+		-webkit-align-items: stretch;
+		-ms-align-items: stretch;
+		align-items: stretch;
+	}
+
+		/* Holds the section heading as well as the rail, so the panel beside
+		   it stretches from the top of the heading down to the last tab. */
+		.tabs-side {
+			-moz-flex: 0 0 22em;
+			-webkit-flex: 0 0 22em;
+			-ms-flex: 0 0 22em;
+			flex: 0 0 22em;
+			padding-right: 1.5em;
+		}
+
+			.tabs-side > p {
+				margin-bottom: 1.5em;
+			}
+
+		.tabs-list {
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
+			-moz-flex-direction: column;
+			-webkit-flex-direction: column;
+			-ms-flex-direction: column;
+			flex-direction: column;
+			gap: 0.35em;
+		}
+
+		/* Buttons, not links — activating one swaps a panel on this page
+		   rather than navigating.
+
+		   The template styles every bare <button> as a pill CTA (main.css
+		   1821-1853): uppercase, 0.25em tracking, nowrap, a fixed 4.75em
+		   line-height, and — the awkward part — `border` and `color` with
+		   !important, so those two have to be fought with !important in
+		   turn. It also hangs a :after overlay on the element that the
+		   generic button:hover fades to solid white; that has to go or
+		   every tab flashes white under the pointer. */
+		.tabs-tab {
+			-moz-appearance: none;
+			-webkit-appearance: none;
+			-ms-appearance: none;
+			appearance: none;
+			background-color: transparent;
+			border: 0 !important;
+			border-left: solid 3px rgba(255, 255, 255, 0.2) !important;
+			border-radius: 0 0.35em 0.35em 0;
+			color: rgba(255, 255, 255, 0.75) !important;
+			cursor: pointer;
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
+			-moz-align-items: center;
+			-webkit-align-items: center;
+			-ms-align-items: center;
+			align-items: center;
+			font-family: inherit;
+			font-size: 0.9em;
+			font-weight: normal;
+			height: auto;
+			letter-spacing: 0;
+			line-height: 1.5;
+			padding: 0.9em 1em;
+			text-align: left;
+			text-transform: none;
+			white-space: normal;
+			width: 100%;
+			-moz-transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+			-webkit-transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+			-ms-transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+			transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+		}
+
+			/* The template's hover-fill overlay. */
+			.tabs-tab:after {
+				display: none;
+			}
+
+			.tabs-tab .icon {
+				margin-right: 0.85em;
+				opacity: 0.8;
+				text-align: center;
+				width: 1.4em;
+				-moz-flex-shrink: 0;
+				-webkit-flex-shrink: 0;
+				-ms-flex-shrink: 0;
+				flex-shrink: 0;
+			}
+
+			/* The rail is a single control group under a roving tabindex, so
+			   the active tab has to be legible as the current one without
+			   relying on focus. */
+			.tabs-tab.is-active {
+				background-color: rgba(0, 0, 0, 0.25);
+				border-left-color: #ffffff !important;
+				color: #ffffff !important;
+				font-weight: bold;
+			}
+
+				.tabs-tab.is-active .icon {
+					opacity: 1;
+				}
+
+			.tabs-tab:focus-visible {
+				outline: 3px solid #ffffff;
+				outline-offset: -3px;
+			}
+
+		.tabs-panels {
+			-moz-flex: 1;
+			-webkit-flex: 1;
+			-ms-flex: 1;
+			flex: 1;
+			display: -ms-grid;
+			display: grid;
+			background-color: rgba(0, 0, 0, 0.25);
+			border-radius: 0.35em;
+			min-width: 0;
+			padding: 2.5em;
+		}
+
+			/* Every panel occupies the same cell; the hidden ones are still
+			   laid out, so the container keeps the height of the tallest and
+			   the page doesn't jump as the pointer moves down the rail. */
+			.tabs-panel {
+				grid-area: 1 / 1;
+				display: -moz-flex;
+				display: -webkit-flex;
+				display: -ms-flex;
+				display: flex;
+				-moz-align-items: center;
+				-webkit-align-items: center;
+				-ms-align-items: center;
+				align-items: center;
+				gap: 2.25em;
+			}
+
+				/* [hidden] is what the script toggles — it keeps inactive
+				   panels out of the accessibility tree and their "Learn more"
+				   links out of the tab order. Overriding display:none back to
+				   flex is deliberate: visibility keeps the box measured for
+				   the grid sizing above, and it has to be the same display
+				   the visible panels use or the two would size differently. */
+				.tabs-panel[hidden] {
+					display: -moz-flex;
+					display: -webkit-flex;
+					display: -ms-flex;
+					display: flex;
+					opacity: 0;
+					pointer-events: none;
+					visibility: hidden;
+				}
+
+				/* Square, and sized off the panel's height rather than a
+				   fixed width, so it scales with the box the tab rail sets.
+				   Works as either this div or an <img> — object-fit keeps a
+				   non-square photo from distorting. */
+				.tabs-panel-media {
+					-moz-flex: 0 0 auto;
+					-webkit-flex: 0 0 auto;
+					-ms-flex: 0 0 auto;
+					flex: 0 0 auto;
+					-moz-align-self: stretch;
+					-ms-align-self: stretch;
+					align-self: stretch;
+					aspect-ratio: 1 / 1;
+					background-color: rgba(255, 255, 255, 0.08);
+					background-image: url("image/intro.svg");
+					background-position: center center;
+					background-repeat: no-repeat;
+					background-size: cover;
+					border-radius: 0.35em;
+					display: block;
+					object-fit: cover;
+				}
+
+				.tabs-panel-body {
+					-moz-flex: 1;
+					-webkit-flex: 1;
+					-ms-flex: 1;
+					flex: 1;
+					min-width: 0;
+				}
+
+				/* Icon and project name share one row. */
+				.tabs-panel-title {
+					display: -moz-flex;
+					display: -webkit-flex;
+					display: -ms-flex;
+					display: flex;
+					-moz-align-items: center;
+					-webkit-align-items: center;
+					-ms-align-items: center;
+					align-items: center;
+					gap: 0.65em;
+					margin-bottom: 0.6em;
+				}
+
+					/* The template's .icon.major badge, shrunk to sit on a
+					   text line. Its :before inherits this colour — the
+					   .wrapper.style3 rule that would supply it only targets
+					   .major, which this no longer is. */
+					.tabs-panel-title .icon {
+						background-color: #ffffff;
+						border-radius: 100%;
+						color: #861F41;
+						font-size: 0.8em;
+						height: 2em;
+						line-height: 2em;
+						text-align: center;
+						width: 2em;
+						-moz-flex-shrink: 0;
+						-webkit-flex-shrink: 0;
+						-ms-flex-shrink: 0;
+						flex-shrink: 0;
+					}
+
+				.tabs-panel.is-active {
+					opacity: 1;
+					visibility: visible;
+					-moz-transition: opacity 0.25s ease;
+					-webkit-transition: opacity 0.25s ease;
+					-ms-transition: opacity 0.25s ease;
+					transition: opacity 0.25s ease;
+				}
+
+				.tabs-panel .actions {
+					margin-bottom: 0;
+				}
+
+		/* Below the spotlights' own breakpoint the rail and panel are too
+		   narrow side by side, so the rail becomes a full-width stack with
+		   the panel underneath — the component's own mobile arrangement. */
+		@media screen and (max-width: 980px) {
+
+			.tabs {
+				-moz-flex-direction: column;
+				-webkit-flex-direction: column;
+				-ms-flex-direction: column;
+				flex-direction: column;
+			}
+
+			.tabs-side {
+				-moz-flex: 0 0 auto;
+				-webkit-flex: 0 0 auto;
+				-ms-flex: 0 0 auto;
+				flex: 0 0 auto;
+				margin-bottom: 1.25em;
+				padding-right: 0;
+			}
+
+			.tabs-panels {
+				padding: 2em;
+			}
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			.tabs-tab {
+				font-size: 0.85em;
+				padding: 0.8em 0.9em;
+			}
+
+			.tabs-panels {
+				padding: 1.5em;
+			}
+
+			/* Side by side there is no room for both, and the square can't
+			   keep deriving its size from the panel height here — a phone
+			   wraps the description over enough lines that a height-matched
+			   square would crowd the text out entirely. Fixed size, stacked
+			   above the copy. */
+			.tabs-panel {
+				-moz-flex-direction: column;
+				-webkit-flex-direction: column;
+				-ms-flex-direction: column;
+				flex-direction: column;
+				-moz-align-items: flex-start;
+				-webkit-align-items: flex-start;
+				-ms-align-items: flex-start;
+				align-items: flex-start;
+				gap: 1.5em;
+			}
+
+				.tabs-panel-media {
+					-moz-align-self: flex-start;
+					-ms-align-self: flex-start;
+					align-self: flex-start;
+					height: 9em;
+					width: 9em;
+				}
+
+				.tabs-panel-body {
+					width: 100%;
+				}
+
+		}
+
+		/* The cross-fade is decoration; the swap itself must still happen. */
+		@media (prefers-reduced-motion: reduce) {
+
+			.tabs-tab,
+			.tabs-panel.is-active {
+				-moz-transition: none;
+				-webkit-transition: none;
+				-ms-transition: none;
+				transition: none;
+			}
+
+		}
 
 /* ---- Publications ---- */
 
