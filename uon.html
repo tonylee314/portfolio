@@ -33,27 +33,30 @@
 					<section id="main" class="wrapper">
 						<div class="inner">
 							<h1 class="major">Goal</h1>
-							<span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
-							<p>xxx</p>
-                            <h1 class="major">Background</h1>
+							<p>[University of Nottingham, Human Factors Research Group] As automated vehicles reduce the manual demands of driving, passengers are free to spend that time on non-driving related tasks (NDRT) &mdash; including immersive ones. This study asked what that costs when control has to come back: does an augmented reality reminder, surfaced during the handover, restore a driver's situational awareness after they have been inside a virtual environment?</p>
+
+							<h1 class="major">Background</h1>
 								<section>
-                                    <p>xxx</p>
+									<p>A driver in a Level 4 vehicle who has spent the trip in a headset is not simply idle &mdash; they are perceptually somewhere else. The transition back to manual control is the moment that matters, and it is the moment least supported by current interfaces. Prior work on takeover requests largely assumes a passenger who is disengaged but still physically present in the cabin; wearing a mixed reality headset breaks that assumption. The open question was whether an AR layer, built on the CHAT training framework, could be used to rebuild awareness during the handover rather than merely announcing it.</p>
 					</section>
 							<h1 class="major">Methods</h1>
 								<section>
 									<h2>Participants</h2>
-									<p>xxx</p>
+									<p>16 paid participants, each acting as the driver.</p>
                                     <hr />
                                     <h2>Study Design</h2>
-									<p>xxx</p>
+									<p>A between-subjects road study with two conditions: one without AR overlays, and one with AR reminder prompts derived from the CHAT training framework. Trials ran on local highways in Level 4 autonomous vehicles &mdash; on the road rather than in a simulator, which is what makes the situational awareness measures meaningful and also what constrained the sample size.</p>
+									<p>The prototype was built in Unity and deployed to Meta Quest Pro and Pico mixed reality headsets. Qualitative data came from think-aloud transcription and behavioural video analysis; quantitative data came from SART, TTAQ, SSQ and DDQ instruments alongside familiarity assessments, so that awareness, trust, simulator sickness and driver behaviour were each measured separately rather than collapsed into one self-report.</p>
 					</section>
                             <h1 class="major">Insights</h1>
 								<section>
-                                    <p>xxx</p>
+									<p>The study failed to reject the null hypothesis: there was <strong>no significant difference in situational awareness</strong> between the AR and non-AR conditions. That is the headline finding, and it is a negative one &mdash; the reminder layer, as designed, did not measurably rebuild awareness during the handover.</p>
+									<p>The supporting measures were more encouraging and more surprising. Participants reported moderate perceptions of safety and, notably, high comfort wearing a mixed reality headset while in a moving vehicle &mdash; a result that matters independently of the AR manipulation, because headset tolerance in transit is usually assumed to be the blocking constraint on this entire class of interface.</p>
 					</section>
                             <h1 class="major">My Learnings</h1>
 								<section>
-                                    <p>xxx</p>
+									<p>A null result on the primary hypothesis still told us where the prototype was actually failing, and most of it was sensing rather than interface. The system had no vehicle-detection capability, so the reminders could not reference anything happening around the car; camera resolution was low enough to distort distance perception; and sun glare repeatedly broke hand tracking on the open road. Those are the three things I would fix before concluding that AR reminders themselves do not help &mdash; the manipulation may have been too weak to test the idea, which is a different claim from the idea being wrong.</p>
+									<p>Running a study on live highways rather than in a simulator also reset my sense of what counts as a controlled condition. Weather, traffic and sun angle were not noise to be minimised; they were the environment the interface has to survive.</p>
 					</section>
 						</div>
 					</section>

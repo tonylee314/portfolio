@@ -153,6 +153,69 @@
 		background-color: var(--accent);
 	}
 
+/* ---- Inline figures on secondary pages ----
+
+	   Evidence sits next to the claim it supports rather than as a single
+	   decorative hero, so a prototype screen lands under Methods and a
+	   results chart under Insights.
+
+	       <figure class="fig">
+	           <img src="images/carid-axure.jpg" alt="…" />
+	           <figcaption>…</figcaption>
+	       </figure>
+
+	   Wrap two in .fig-pair to place them side by side. alt text is not
+	   optional here: these carry findings, so an empty alt would drop the
+	   evidence entirely for a screen reader. ---- */
+
+	.fig {
+		margin: 2em 0;
+	}
+
+		.fig img {
+			border: solid 1px var(--hairline);
+			border-radius: 0.35em;
+			display: block;
+			height: auto;
+			width: 100%;
+		}
+
+		.fig figcaption {
+			color: rgba(255, 255, 255, 0.6);
+			font-size: 0.85em;
+			line-height: 1.6;
+			margin-top: 0.85em;
+		}
+
+	.fig-pair {
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		gap: 1.5em;
+		margin: 2em 0;
+	}
+
+		.fig-pair .fig {
+			-moz-flex: 1;
+			-webkit-flex: 1;
+			-ms-flex: 1;
+			flex: 1;
+			margin: 0;
+			min-width: 0;
+		}
+
+		@media screen and (max-width: 736px) {
+
+			.fig-pair {
+				-moz-flex-direction: column;
+				-webkit-flex-direction: column;
+				-ms-flex-direction: column;
+				flex-direction: column;
+			}
+
+		}
+
 /* ---- Bold text ----
 
 	   main.css:164 paints every <strong> and <b> near-black (#020202). That
