@@ -153,6 +153,171 @@
 		background-color: var(--accent);
 	}
 
+/* ---- Organisation logos ----
+
+	   No plate — the marks sit directly on the section. That only works
+	   because the files in images/logos/ are prepared for it: the originals
+	   in images/ are a mix of dark-navy and maroon artwork, opaque white
+	   panels and one square canvas that is mostly empty margin, none of
+	   which reads on a near-black background.
+
+	   images/logos/ holds derived copies, generated from the originals by
+	   stripping near-white pixels and cropping to the artwork's bounding
+	   box. Two consequences matter:
+
+	   - Trimming makes the set proportionate. The source aspect ratios ran
+	     1:1 to 3:1, so a shared box sized them wildly differently; trimmed,
+	     they all land between 2.2:1 and 4.5:1 and a single height rule gives
+	     them comparable weight.
+	   - Clearing near-white turns interior detail — Nottingham's castle,
+	     the BRG bulls — into holes rather than fill, so the knockout below
+	     preserves it instead of flattening it to a solid shape.
+
+	   BRG is the exception and keeps its colour: its wordmark is already
+	   white, so it was designed for a dark background. That is also why it
+	   was the one logo that looked broken on the old white plate. ---- */
+
+	.proj-logo {
+		-moz-align-items: center;
+		-webkit-align-items: center;
+		-ms-align-items: center;
+		align-items: center;
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		/* Sized so the box matches the TELUS wordmark's own proportion
+		   (~2.2:1). TELUS then fills it exactly and every other mark is
+		   width-bound to the same 5.8em, which is what actually equalises
+		   them: they were already all 2.6em tall, but BRG's solid red block
+		   ran half again as wide as the TELUS wordmark and read much larger
+		   for it. */
+		height: 2.6em;
+		-moz-justify-content: flex-end;
+		-webkit-justify-content: flex-end;
+		-ms-justify-content: flex-end;
+		justify-content: flex-end;
+		position: absolute;
+		right: 2em;
+		top: 2em;
+		width: 5.8em;
+		z-index: 3;
+	}
+
+		.proj-logo img {
+			display: block;
+			height: auto;
+			max-height: 100%;
+			max-width: 100%;
+			object-fit: contain;
+			width: auto;
+			/* Flattens each mark to white. At this size the colour carries
+			   no information the section text does not already give, and it
+			   is the only treatment that makes six differently-built files
+			   look like one set. Held just under full white so the logos sit
+			   below the headings in the hierarchy. */
+			-webkit-filter: brightness(0) invert(1);
+			filter: brightness(0) invert(1);
+			opacity: 0.9;
+		}
+
+		/* Every other mark is width-bound in the shared box, so it has slack
+		   vertically; TELUS matches the box ratio almost exactly and fills it
+		   in both directions, which makes it read heavier than the rest.
+		   Capped a little shorter. Right/centre alignment on the container
+		   means it stays put as it shrinks. */
+		.proj-logo--telus img {
+			max-height: 85%;
+		}
+
+		/* Already light-on-transparent — knocking it out would erase the
+		   bulls and leave a solid white slab. */
+		.proj-logo--plain img {
+			-webkit-filter: none;
+			filter: none;
+			opacity: 1;
+		}
+
+	/* Recent projects: the template gives the row no positioning context. */
+	.spotlights > section {
+		position: relative;
+	}
+
+	/* Other projects: anchored to the panel's top-right corner, out of flow,
+	   so it swaps with the active project without taking width from the
+	   title. Sharing the title's line cost roughly 6em, which was enough to
+	   wrap every longer project name onto two lines; .tabs-panel-body is
+	   padded down instead so the title clears the badge entirely. */
+	/* The badge belongs to the section, not the card: it sits in the top-right
+	   corner on the same line as the "Other Projects" heading. It still lives
+	   inside each panel so it swaps with the active project — it is only
+	   positioned against the section, which is why .tabs-panel must not
+	   establish a containing block of its own.
+
+	   Height matches the h2's line box (1.75em font x 1.5 line-height) so the
+	   mark optically centres on the heading rather than the heading's cap. */
+	#two > .inner {
+		position: relative;
+	}
+
+		/* right/top are absolute against the inner's *padding* box, so they
+		   have to repeat its padding to land on the content edge — i.e. flush
+		   with the heading's left margin and the card's right edge. */
+		.tabs-panel > .proj-logo {
+			height: 2.625em;
+			right: 5em;
+			top: 3em;
+			width: 5.85em;
+		}
+
+			@media screen and (max-width: 1680px) {
+
+				.tabs-panel > .proj-logo {
+					right: 4em;
+				}
+
+			}
+
+	@media screen and (max-width: 736px) {
+
+		.proj-logo {
+			height: 2.6em;
+			right: 1em;
+			top: 1em;
+			width: 5.5em;
+		}
+
+	}
+
+/* ---- Project titles as links ----
+
+	   Both project sections now link the title to the same case-study page as
+	   the button, so the heading is a click target too. The template already
+	   gives heading links `color: inherit`, but not the border-bottom reset —
+	   without it every title picks up the underline rule for body links. ---- */
+
+	.spotlights > section h2 a,
+	.tabs-panel-title a {
+		border-bottom: 0;
+		color: inherit;
+		text-decoration: none;
+		-moz-transition: color 0.2s ease;
+		-webkit-transition: color 0.2s ease;
+		-ms-transition: color 0.2s ease;
+		transition: color 0.2s ease;
+	}
+
+		.spotlights > section h2 a:hover,
+		.tabs-panel-title a:hover {
+			color: var(--accent-text);
+		}
+
+		.spotlights > section h2 a:focus-visible,
+		.tabs-panel-title a:focus-visible {
+			outline: 3px solid #ffffff;
+			outline-offset: 3px;
+		}
+
 /* ---- Inline figures on secondary pages ----
 
 	   Evidence sits next to the claim it supports rather than as a single
@@ -650,6 +815,35 @@
 					font-size: 0.75em;
 				}
 
+				/* The phone stack centres everything in the hero, which left
+				   "Virginia Tech" centred across the full column while the
+				   degree list sat as a narrower centred block — the two never
+				   lined up. Centring the wrapper instead and left-aligning
+				   inside it gives them one shared left edge. */
+				.hero-credentials {
+					display: inline-block;
+					text-align: left;
+				}
+
+					/* Was 0 — the school name ran straight on from the
+					   LinkedIn row above it. The #intro prefix is needed:
+					   #intro .hero-school sets the base margins and carries
+					   an ID, so a plain class rule here loses to it. */
+					#intro .hero-credentials .hero-school {
+						margin-bottom: 0.45em;
+						margin-top: 1.25em;
+					}
+
+					/* Block rather than inline-block so this margin collapses
+					   with the school's above it. As an inline-block the two
+					   margins stacked instead, which is where the original
+					   ~15px gap came from; 0.45em on the school alone is half
+					   of it. */
+					.hero-credentials .hero-education {
+						display: block;
+						margin-top: 0;
+					}
+
 			}
 
 	/* Hero contact list — mobile/tablet only. On desktop the same links
@@ -929,9 +1123,36 @@
 			width: 19em;
 		}
 
+		/* Tightened to roughly the density of the Other Projects card. The
+		   rows were running ~330px each for two or three lines of copy,
+		   almost all of it the template's stacked 2em margins. */
 		.spotlights > section > .content {
-			padding: 2em 3.5em 1.25em 3.5em;
+			padding: 1.5em 3em;
 		}
+
+			.spotlights > section > .content h2 {
+				margin-bottom: 0.35em;
+			}
+
+			.spotlights > section > .content p {
+				line-height: 1.6;
+				margin-bottom: 1.1em;
+			}
+
+			/* Bottom-right, matching the Other Projects card. */
+			.spotlights > section .actions {
+				-moz-justify-content: flex-end;
+				-webkit-justify-content: flex-end;
+				-ms-justify-content: flex-end;
+				justify-content: flex-end;
+				margin-bottom: 0;
+			}
+
+				.spotlights > section .button {
+					height: auto;
+					line-height: 1.6;
+					padding: 1.1em 2.5em;
+				}
 
 		/* The template ramps black over the maroon, 5% deeper each row, and
 		   only covers rows 2 and 3. Over ink that ramp is invisible at the
@@ -958,7 +1179,7 @@
 		@media screen and (max-width: 1680px) {
 
 			.spotlights > section > .content {
-				padding: 2em 3em 1.25em 3em;
+				padding: 1.5em 2.5em;
 			}
 
 		}
@@ -980,7 +1201,7 @@
 			}
 
 			.spotlights > section > .content {
-				padding: 2em 2em 1em 2em;
+				padding: 1.75em 2em;
 			}
 
 		}
@@ -1022,6 +1243,11 @@
 	   The panels are stacked in one grid cell so the tallest one sets the
 	   height and switching tabs never reflows the section. ---- */
 
+	/* stretch: the card spans the full height of the rail beside it, so its
+	   top edge lines up with the "Lab & Class Projects:" lead-in and its
+	   bottom edge with the last tab. The surplus that leaves inside the card
+	   is taken up by the footer's margin-top:auto rather than left as a gap
+	   under the button. */
 	.tabs {
 		display: -moz-flex;
 		display: -webkit-flex;
@@ -1036,10 +1262,13 @@
 		/* Holds the section heading as well as the rail, so the panel beside
 		   it stretches from the top of the heading down to the last tab. */
 		.tabs-side {
-			-moz-flex: 0 0 22em;
-			-webkit-flex: 0 0 22em;
-			-ms-flex: 0 0 22em;
-			flex: 0 0 22em;
+			/* 18em fits the longest tab label; the previous 22em was sized
+			   for a lead-in line that has since been shortened, and the
+			   surplus was coming straight out of the panel's title width. */
+			-moz-flex: 0 0 18em;
+			-webkit-flex: 0 0 18em;
+			-ms-flex: 0 0 18em;
+			flex: 0 0 18em;
 			padding-right: 1.5em;
 		}
 
@@ -1153,7 +1382,7 @@
 			border: solid 1px var(--hairline);
 			border-radius: 0.35em;
 			min-width: 0;
-			padding: 2.5em;
+			padding: 2em;
 		}
 
 			/* Every panel occupies the same cell; the hidden ones are still
@@ -1165,10 +1394,15 @@
 				display: -webkit-flex;
 				display: -ms-flex;
 				display: flex;
-				-moz-align-items: center;
-				-webkit-align-items: center;
-				-ms-align-items: center;
-				align-items: center;
+				/* stretch, not center: the body has to fill the panel height
+				   for margin-top:auto to land every "Learn more" on the same
+				   baseline. Centring instead let a three-line description
+				   push its button below the others'. The media opts back out
+				   with align-self. */
+				-moz-align-items: stretch;
+				-webkit-align-items: stretch;
+				-ms-align-items: stretch;
+				align-items: stretch;
 				gap: 2.25em;
 			}
 
@@ -1190,34 +1424,103 @@
 
 				/* Square, and sized off the panel's height rather than a
 				   fixed width, so it scales with the box the tab rail sets.
-				   Works as either this div or an <img> — object-fit keeps a
-				   non-square photo from distorting. */
+
+				   16:9 rather than square, and a fixed width rather than one
+				   derived from the panel height, so all four projects get an
+				   identical frame in an identical position — the box no
+				   longer changes shape with whatever else is in the panel.
+
+				   The ratio is chosen to match the source images: three of
+				   the four are 16:9, so they seat with no crop at all, which
+				   is also what stops the VR Teams group shot losing the
+				   people at both ends. Only Timeoff (3:2) is cropped, and
+				   only slightly.
+
+				   position:absolute on the image is load-bearing: an <img>
+				   contributing its intrinsic width (1920px) to the flex base
+				   blows the frame out of the panel. */
 				.tabs-panel-media {
+					position: relative;
 					-moz-flex: 0 0 auto;
 					-webkit-flex: 0 0 auto;
 					-ms-flex: 0 0 auto;
 					flex: 0 0 auto;
+					/* Stretched, so the frame spans the card's full content
+					   height. That is what lets the title sit on the image's
+					   top edge and the button on its bottom edge — both
+					   columns share one band. Width is derived from that
+					   height by the ratio, which keeps the 16:9 crop. */
 					-moz-align-self: stretch;
 					-ms-align-self: stretch;
 					align-self: stretch;
-					aspect-ratio: 1 / 1;
-					background-color: rgba(255, 255, 255, 0.08);
-					background-image: url("image/intro.svg");
-					background-position: center center;
-					background-repeat: no-repeat;
-					background-size: cover;
+					aspect-ratio: 16 / 9;
+					background-color: rgba(255, 255, 255, 0.05);
 					border-radius: 0.35em;
 					display: block;
-					object-fit: cover;
+					overflow: hidden;
 				}
 
+					.tabs-panel-media img {
+						display: block;
+						height: 100%;
+						left: 0;
+						object-fit: cover;
+						position: absolute;
+						top: 0;
+						width: 100%;
+					}
+
+					/* Timeoff is the only source that is not 16:9, so it is
+					   also the only one where the crop position matters. */
+					.tabs-panel-media--left img {
+						object-position: 40% center;
+					}
+
+				/* A column so the footer row can be pushed to the bottom
+				   edge. The panel is as tall as the tab rail beside it, which
+				   is taller than this content — previously that surplus
+				   collected as dead space under a mid-floating button. */
 				.tabs-panel-body {
 					-moz-flex: 1;
 					-webkit-flex: 1;
 					-ms-flex: 1;
 					flex: 1;
+					display: -moz-flex;
+					display: -webkit-flex;
+					display: -ms-flex;
+					display: flex;
+					-moz-flex-direction: column;
+					-webkit-flex-direction: column;
+					-ms-flex-direction: column;
+					flex-direction: column;
 					min-width: 0;
 				}
+
+				/* The action sits where the eye finishes rather than floating
+				   mid-panel; margin-top:auto pins it to the bottom edge and
+				   absorbs the surplus height the tab rail imposes. */
+				.tabs-panel-foot {
+					display: -moz-flex;
+					display: -webkit-flex;
+					display: -ms-flex;
+					display: flex;
+					-moz-justify-content: flex-end;
+					-webkit-justify-content: flex-end;
+					-ms-justify-content: flex-end;
+					justify-content: flex-end;
+					margin-top: auto;
+					padding-top: 1em;
+				}
+
+					/* The template's pill is 4.75em tall on a 3.75em side
+					   padding — sized for a page-level CTA and oversized
+					   inside a card. Trimmed to about three quarters of that,
+					   which still clears a comfortable tap target. */
+					.tabs-panel-foot .button {
+						height: auto;
+						line-height: 1.6;
+						padding: 1.1em 2.5em;
+					}
 
 				/* Icon and project name share one row. */
 				.tabs-panel-title {
@@ -1230,7 +1533,7 @@
 					-ms-align-items: center;
 					align-items: center;
 					gap: 0.65em;
-					margin-bottom: 0.6em;
+					margin-bottom: 0.4em;
 				}
 
 					/* The template's .icon.major badge, shrunk to sit on a
@@ -1262,6 +1565,16 @@
 				}
 
 				.tabs-panel .actions {
+					margin-bottom: 0;
+				}
+
+				/* The template's 2em paragraph margin is the single biggest
+				   item in the card's height budget, and the footer's own
+				   padding already separates the copy from the button. Left in,
+				   the body outgrew the card and pushed the button past the
+				   image's bottom edge. */
+				.tabs-panel-body > p {
+					line-height: 1.55;
 					margin-bottom: 0;
 				}
 
@@ -1320,12 +1633,27 @@
 				gap: 1.5em;
 			}
 
+				/* Still anchored to the section heading, just smaller — the
+				   heading and the badge share a much narrower line here. */
+				.tabs-panel > .proj-logo {
+					height: 2.4em;
+					width: 6em;
+				}
+
+				/* Full-width thumbnail above the copy. flex-basis has to be
+				   reset here — the column direction makes the 15em basis a
+				   *height*, which fought the 16:9 ratio and produced a tall
+				   portrait box. */
 				.tabs-panel-media {
-					-moz-align-self: flex-start;
-					-ms-align-self: flex-start;
-					align-self: flex-start;
-					height: 9em;
-					width: 9em;
+					-moz-flex: 0 0 auto;
+					-webkit-flex: 0 0 auto;
+					-ms-flex: 0 0 auto;
+					flex: 0 0 auto;
+					-moz-align-self: stretch;
+					-ms-align-self: stretch;
+					align-self: stretch;
+					height: auto;
+					width: 100%;
 				}
 
 				.tabs-panel-body {
@@ -1571,6 +1899,8 @@
 		.resume-btn,
 		.contact-list a,
 		.hero-contact a,
+		.spotlights > section h2 a,
+		.tabs-panel-title a,
 		#sidebar nav a {
 			-moz-transition: none;
 			-webkit-transition: none;
