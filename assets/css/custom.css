@@ -3,6 +3,226 @@
 	Loaded AFTER main.css so the HTML5 UP template file stays untouched.
 */
 
+/* ==== Theme ================================================================
+
+   The template ships every content surface in VT maroon — style1, style1-alt,
+   style2 and style3 are all #861F41 or #8a3652 — so five of the six surfaces
+   on the page were the same red. This moves the base to a graded near-black
+   and keeps maroon for accents only: buttons, the active tab, publication
+   tags, focus rings, and the tail of the hero gradient.
+
+   Two constraints shaped the accent:
+
+   - Solid #861F41 sits at only 2.0:1 against the ink base, under the 3:1
+     WCAG 1.4.11 needs for the *edge* of a control. White text on it is
+     fine (9.2:1), but the button's boundary would be nearly invisible.
+     #b0305c is the same hue lifted until it clears both gates: 3.01:1
+     against ink, 6.13:1 for white text on it.
+   - The ink steps are within ~1.1:1 of each other, which is intentional for
+     surfaces but too close to define an edge, so raised panels take a
+     hairline border rather than relying on fill alone.
+
+   True #861F41 is kept as --accent-deep for the hero gradient and hover
+   states, where an edge already exists.                                    */
+
+	:root {
+		--ink-900: #0e0d13;   /* footer — the deepest step */
+		--ink-800: #14131a;   /* page base */
+		--ink-750: #17161e;   /* spotlights, publications */
+		--ink-700: #1c1b24;   /* other projects, sidebar */
+		--ink-600: #24222e;   /* raised surfaces: panels, active tab */
+
+		--accent: #b0305c;        /* fills that need a visible edge on ink */
+		--accent-deep: #861F41;   /* true VT maroon: gradient tail, hovers */
+		--accent-text: #e0708f;   /* accent as text on ink — 6.05:1 */
+
+		/* Badge/puck fill behind a maroon glyph. Light enough that the true
+		   VT maroon reads on it at 7.4:1 — so icons get the real brand
+		   colour rather than the lifted --accent, which only exists for
+		   fills that must hold an edge against ink. */
+		--accent-tint: #efe3e8;
+
+		--hairline: rgba(255, 255, 255, 0.1);
+		--hairline-strong: rgba(255, 255, 255, 0.18);
+	}
+
+/* ---- Surfaces ---- */
+
+	body {
+		background: var(--ink-800);
+	}
+
+	/* style1 is the hero, which paints its own gradient below; the rest are
+	   content bands. style2-alt is unused on this page but retinted so a new
+	   section can't reintroduce the template's grey. */
+	.wrapper.style1,
+	.wrapper.style3,
+	.wrapper.style3-alt {
+		background-color: var(--ink-700);
+	}
+
+	.wrapper.style2,
+	.wrapper.style2-alt {
+		background-color: var(--ink-750);
+	}
+
+	.wrapper.style1-alt {
+		background-color: var(--ink-900);
+	}
+
+	#sidebar {
+		background: var(--ink-700);
+		border-right: solid 1px var(--hairline);
+	}
+
+	/* No page uses .icon.major any more — the tabs replaced the features
+	   grid it belonged to — but it stays themed so a future section can't
+	   reintroduce the template's white puck with an off-palette glyph. */
+	.icon.major {
+		background: var(--accent-tint);
+	}
+
+		.wrapper.style1 .icon.major:before,
+		.wrapper.style1-alt .icon.major:before,
+		.wrapper.style2 .icon.major:before,
+		.wrapper.style2-alt .icon.major:before,
+		.wrapper.style3 .icon.major:before,
+		.wrapper.style3-alt .icon.major:before {
+			color: var(--accent-deep);
+		}
+
+/* ---- Secondary pages (fortify.html, uon.html, …) ----
+
+	   Those pages use a different skeleton from index.html: a #header bar
+	   instead of #intro, a bare .wrapper for the body, and .wrapper.alt on
+	   the footer. Targeting #footer by id covers both skeletons at once,
+	   since it outranks the .wrapper.style1-alt / .wrapper.alt classes. ---- */
+
+	.wrapper.alt {
+		background-color: var(--ink-750);
+	}
+
+	#footer {
+		background-color: var(--ink-900);
+	}
+
+	/* The secondary pages' hero header. Same ink-to-maroon gradient as
+	   #intro so the two skeletons read as one site, and enough vertical
+	   room for the particle field behind it to register. */
+	#header {
+		background-color: var(--ink-800);
+		background-image:
+			-webkit-linear-gradient(115deg, #100f16 0%, #3a1226 58%, #861F41 100%);
+		background-image:
+			linear-gradient(115deg, #100f16 0%, #3a1226 58%, #861F41 100%);
+		border-bottom: solid 1px var(--hairline);
+		padding: 3em 2em;
+		position: relative;
+	}
+
+		/* Above the particle layer. */
+		#header > .title,
+		#header > nav {
+			position: relative;
+			z-index: 1;
+		}
+
+		/* The template's 0.35 white is ~1.9:1 over the gradient's maroon
+		   end. These are the only navigation on the page, so they get the
+		   same treatment as the sidebar links on index. */
+		#header > nav > ul > li a {
+			color: rgba(255, 255, 255, 0.78);
+		}
+
+			#header > nav > ul > li a:hover,
+			#header > nav > ul > li a.active {
+				color: #ffffff;
+			}
+
+			#header > nav > ul > li a:focus-visible {
+				outline: 3px solid #ffffff;
+				outline-offset: 3px;
+			}
+
+	/* Section-heading underline. The template animates a violet-to-pink
+	   gradient here, left over from the original Hyperspace palette. */
+	h1.major:after,
+	h2.major:after,
+	h3.major:after {
+		background-image: none;
+		background-color: var(--accent);
+	}
+
+/* ---- Bold text ----
+
+	   main.css:164 paints every <strong> and <b> near-black (#020202). That
+	   was survivable while the only bold text sat on the light grey sidebar,
+	   but on ink it drops the sidebar nav labels — which are <b> — to 1.2:1.
+	   Inheriting is the right behaviour on a dark theme, and it also fixes
+	   the <strong> lead-ins on the project sub-pages. ---- */
+
+	strong, b {
+		color: inherit;
+	}
+
+/* ---- Footer ----
+
+	   The template sets the footer line to 0.15 white — about 1.5:1 on any
+	   background, maroon or ink. Raised to clear AA. ---- */
+
+	#footer > .inner .menu {
+		color: rgba(255, 255, 255, 0.6);
+	}
+
+/* ---- Buttons: the template's outline pill, with maroon reserved for the
+	   one primary action rather than every control. ---- */
+
+	.button.primary {
+		background-color: var(--accent) !important;
+		border-color: var(--accent) !important;
+		color: #ffffff !important;
+	}
+
+/* ---- Particle background layer ----
+
+	   Sits behind the section's own content. The canvas is decoration, so
+	   the host carries aria-hidden and never takes pointer events. ---- */
+
+	.particles {
+		bottom: 0;
+		left: 0;
+		overflow: hidden;
+		pointer-events: none;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 0;
+	}
+
+		.particles-canvas {
+			display: block;
+			height: 100%;
+			width: 100%;
+		}
+
+		/* Everything the section actually contains has to clear the layer.
+		   .hero-resume is deliberately absent: it is already absolutely
+		   positioned at z-index 5, and giving it position:relative here
+		   dropped it back into flow as a full-width bar. */
+		#intro > .inner,
+		#footer > .inner {
+			position: relative;
+			z-index: 1;
+		}
+
+		/* The secondary-page header band is short, so the field needs a
+		   denser, smaller-drift look to read at that height. */
+		#header .particles {
+			z-index: 0;
+		}
+
+/* ==== End theme =========================================================== */
+
 /* ---- Sidebar: narrower than the template's 18em, content shifted to
 	   match. 14em is the narrowest that fits the email address on one
 	   line at the contact list's font size. ---- */
@@ -26,22 +246,41 @@
 		justify-content: flex-start;
 	}
 
-	/* --- Accessibility: the sidebar background is a light grey (#c5c0c0) but
-	   the template puts white text on it, giving 1.25:1 contrast. WCAG AA
-	   requires 4.5:1 for body text. Switched to dark text (5.5-9.4:1). --- */
+	/* --- The sidebar was light grey (#c5c0c0), so these were dark text for
+	   contrast. On the ink surface they invert: light text, 10.0:1 at rest
+	   and 17.1:1 on hover. --- */
 
 	#sidebar nav a {
-		color: rgba(0, 0, 0, 0.65);         /* 5.46:1 */
+		color: rgba(255, 255, 255, 0.75);   /* 10.00:1 */
 	}
 
 		#sidebar nav a:hover {
-			color: rgba(0, 0, 0, 0.85);     /* 9.35:1 */
+			color: #ffffff;                 /* 17.05:1 */
+		}
+
+		/* Was #000000 — correct on the light grey, 1.2:1 on ink. */
+		#sidebar nav a.active {
+			color: #ffffff;
+		}
+
+		/* The nav underline is two stacked bars: :before is the full-width
+		   track, :after the fill that grows to 100% on the active link. The
+		   template runs a maroon track under a black fill, which on ink
+		   leaves the track at 2:1 and the fill invisible. Inverted here —
+		   faint rail, accent fill. */
+		#sidebar nav a:before {
+			background: rgba(255, 255, 255, 0.12);
+		}
+
+		#sidebar nav a:after {
+			background-image: none;
+			background-color: var(--accent);
 		}
 
 	/* Visible keyboard focus for every sidebar control. */
 	#sidebar a:focus-visible,
 	.hero-resume:focus-visible {
-		outline: 3px solid #000000;
+		outline: 3px solid #ffffff;
 		outline-offset: 3px;
 	}
 
@@ -51,11 +290,13 @@
 		padding-top: 2em;
 	}
 
-		/* Filled for contrast: white on maroon = 9.19:1, and the button
-		   itself sits at 5.11:1 against the sidebar (3:1 required). */
+		/* The one primary action, and the main place maroon still appears at
+		   full strength. --accent rather than true #861F41 because the fill
+		   has to hold a 3:1 edge against the ink behind it; white on it is
+		   6.13:1. */
 		.resume-btn {
-			background-color: #861F41;
-			border: 1px solid #861F41;
+			background-color: var(--accent);
+			border: 1px solid var(--accent);
 			border-radius: 0.35em;
 			color: #ffffff;
 			display: block;
@@ -75,8 +316,8 @@
 
 			.resume-btn:hover,
 			.resume-btn:focus {
-				background-color: #5e1630;
-				border-color: #5e1630;
+				background-color: var(--accent-deep);
+				border-color: var(--accent-deep);
 				color: #ffffff;
 			}
 
@@ -94,7 +335,7 @@
 
 			.contact-list a {
 				border: 0;
-				color: rgba(0, 0, 0, 0.7);      /* 6.30:1 */
+				color: rgba(255, 255, 255, 0.7);   /* 8.83:1 on ink-700 */
 				display: -moz-flex;
 				display: -webkit-flex;
 				display: -ms-flex;
@@ -119,7 +360,7 @@
 			}
 
 				.contact-list a:hover {
-					color: #000000;
+					color: #ffffff;
 				}
 
 				/* Icons are decorative (aria-hidden); the adjacent text
@@ -146,9 +387,11 @@
 					word-break: break-word;
 				}
 
-	/* --- Hero resume button: top-right of the home screen.
-	   Matches the sidebar background (#c5c0c0) with dark text:
-	   11.68:1 on text, 5.11:1 against the hero (#861F41). --- */
+	/* --- Hero resume button: top-right of the home screen. White rather than
+	   the sidebar's maroon fill — the hero gradient ends in maroon, so a
+	   maroon button there would have almost no edge. Ink text on white is
+	   16.9:1, and the button holds 8.5:1 or better anywhere on the
+	   gradient. --- */
 
 	.hero-resume {
 		position: absolute;
@@ -158,16 +401,16 @@
 		width: auto;
 		display: inline-block;
 		padding: 1.1em 1.75em;
-		background-color: #c5c0c0;
-		border-color: #c5c0c0;
-		color: #000000;
+		background-color: #ffffff;
+		border-color: #ffffff;
+		color: var(--ink-900);
 	}
 
 		.hero-resume:hover,
 		.hero-resume:focus {
-			background-color: #ffffff;
-			border-color: #ffffff;
-			color: #000000;
+			background-color: var(--accent);
+			border-color: var(--accent);
+			color: #ffffff;
 		}
 
 	/* ---- Tablet: template collapses sidebar to a 3.5em top bar ---- */
@@ -238,31 +481,30 @@
 
 /* ---- Hero: reduce full-screen intro to leave room for photo ---- */
 
-	/* The hero (style1, #861F41) and the first project row (style2 #8a3652
-	   under a 5% black overlay, ~#833250) landed within a couple of percent
-	   of each other, so the two bands read as one continuous block. A deep
-	   plum-to-maroon gradient, darker than anything in the spotlights,
-	   separates them. Both stops are colours the site already uses — the
-	   body purple (#312450) and the resume button's hover maroon (#5e1630) —
-	   so no new hues enter the palette.
+	/* The hero is where maroon is allowed to be the loudest thing on the
+	   page — it runs from the ink base into true #861F41, so the brand
+	   colour still opens the site while the sections below stay neutral.
+	   The gradient also keeps the hero distinct from the first project row,
+	   which is the problem this replaced: both used to be maroon within a
+	   couple of percent of each other.
 
 	   The url() also corrects the template's path: the texture ships at
 	   assets/css/image/intro.svg but main.css asks for images/intro.svg,
 	   so the diagonal line overlay never loaded. */
 
 	#intro {
-		background-color: #3a1a35;
+		background-color: var(--ink-800);
 		background-image:
 			url("image/intro.svg"),
-			-webkit-linear-gradient(115deg, #2a1f42 0%, #451a36 55%, #5e1630 100%);
+			-webkit-linear-gradient(115deg, #100f16 0%, #3a1226 58%, #861F41 100%);
 		background-image:
 			url("image/intro.svg"),
-			linear-gradient(115deg, #2a1f42 0%, #451a36 55%, #5e1630 100%);
+			linear-gradient(115deg, #100f16 0%, #3a1226 58%, #861F41 100%);
 		background-attachment: scroll;
 		background-position: top right, center center;
 		background-repeat: no-repeat, no-repeat;
 		background-size: 100% 100%, cover;
-		border-bottom: solid 2px rgba(255, 255, 255, 0.15);
+		border-bottom: solid 1px var(--hairline);
 	}
 
 	#intro.wrapper.fullscreen {
@@ -288,7 +530,14 @@
 		   The ID is load-bearing — main.css sizes every #intro p at 1.25em
 		   (specificity 1,0,1), which a bare .hero-school could not outrank
 		   no matter where it appears in the file. */
-		#intro .hero-school {
+		/* The template's body colour (0.55 white) lands at 3.8:1 over the
+	   gradient's maroon end — fine as large text at the widest breakpoint,
+	   but below 1680px this drops to ~21px and needs 4.5:1. */
+	#intro .hero-role {
+		color: rgba(255, 255, 255, 0.78);
+	}
+
+	#intro .hero-school {
 			color: #ffffff;
 			font-size: 1em;
 			font-weight: bold;
@@ -310,10 +559,12 @@
 			padding-left: 1.15em;
 			text-align: left;
 			/* An explicit colour rather than opacity: the body colour is
-			   already rgba(255,255,255,0.55), and dimming that again landed
-			   at 3.6:1 against the lightest gradient stop. 0.6 white is
-			   5.5:1 there and still reads lighter than the role above it. */
-			color: rgba(255, 255, 255, 0.6);
+			   already rgba(255,255,255,0.55), and dimming that again put it
+			   under AA. Set against the gradient's *brightest* stop
+			   (#861F41) rather than the section's fallback colour, since
+			   this text sits over the maroon end — 0.7 white is 5.25:1
+			   there, so it holds anywhere on the gradient. */
+			color: rgba(255, 255, 255, 0.7);
 		}
 
 			.hero-education li {
@@ -619,18 +870,26 @@
 			padding: 2em 3.5em 1.25em 3.5em;
 		}
 
-		/* Continue the alternating tint across all six projects
-		   (template only styles the 2nd and 3rd). */
-		.spotlights > section:nth-child(4) {
-			background-color: rgba(0, 0, 0, 0.15);
+		/* The template ramps black over the maroon, 5% deeper each row, and
+		   only covers rows 2 and 3. Over ink that ramp is invisible at the
+		   top and mud at the bottom, so it becomes a plain two-step
+		   alternation in light instead — even rows lift, odd rows sit on
+		   the section colour. */
+		.spotlights > section:nth-child(odd) {
+			background-color: transparent;
 		}
 
-		.spotlights > section:nth-child(5) {
-			background-color: rgba(0, 0, 0, 0.2);
+		.spotlights > section:nth-child(even) {
+			background-color: rgba(255, 255, 255, 0.035);
 		}
 
-		.spotlights > section:nth-child(6) {
-			background-color: rgba(0, 0, 0, 0.25);
+		.spotlights > section + section {
+			border-top: solid 1px var(--hairline);
+		}
+
+		/* Scroll-in overlay: the template tints with the old body purple. */
+		.spotlights > section > .image:before {
+			background: rgba(20, 19, 26, 0.9);
 		}
 
 		@media screen and (max-width: 1680px) {
@@ -803,8 +1062,8 @@
 			   the active tab has to be legible as the current one without
 			   relying on focus. */
 			.tabs-tab.is-active {
-				background-color: rgba(0, 0, 0, 0.25);
-				border-left-color: #ffffff !important;
+				background-color: var(--ink-600);
+				border-left-color: var(--accent) !important;
 				color: #ffffff !important;
 				font-weight: bold;
 			}
@@ -825,7 +1084,10 @@
 			flex: 1;
 			display: -ms-grid;
 			display: grid;
-			background-color: rgba(0, 0, 0, 0.25);
+			/* Only ~1.1:1 from the section behind it, so the hairline is
+			   what actually draws the panel's edge. */
+			background-color: var(--ink-600);
+			border: solid 1px var(--hairline);
 			border-radius: 0.35em;
 			min-width: 0;
 			padding: 2.5em;
@@ -913,9 +1175,9 @@
 					   .wrapper.style3 rule that would supply it only targets
 					   .major, which this no longer is. */
 					.tabs-panel-title .icon {
-						background-color: #ffffff;
+						background-color: var(--accent-tint);
 						border-radius: 100%;
-						color: #861F41;
+						color: var(--accent-deep);
 						font-size: 0.8em;
 						height: 2em;
 						line-height: 2em;
@@ -1110,15 +1372,14 @@
 
 			.pub-tag-journal {
 				background-color: #ffffff;
-				color: #5e1630;
+				color: var(--ink-900);
 			}
 
-			/* Solid maroon on the section's maroon background has weak
-			   edge definition; a dark outline gives the pill a boundary
-			   independent of the fill/background colour match. */
+			/* The dark outline this used to carry was there to separate a
+			   maroon pill from a maroon section. On ink the accent fill
+			   already holds its own edge, so the outline goes. */
 			.pub-tag-thesis {
-				background-color: #861F41;
-				border: 1px solid #000000;
+				background-color: var(--accent);
 				color: #ffffff;
 			}
 
@@ -1171,8 +1432,8 @@
 				color: #ffffff;
 			}
 
-		/* 0.8 white on #8a3652 is ~6:1; the template's default body
-		   colour would land near 3:1, under WCAG AA. */
+		/* Lifted above the template's default body colour so the venue and
+		   date line stays clear of AA on the ink surface. */
 		.pub-meta {
 			grid-area: meta;
 			color: rgba(255, 255, 255, 0.8);
