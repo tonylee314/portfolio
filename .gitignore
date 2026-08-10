@@ -1,0 +1,19 @@
+# Client-confidential material.
+#
+# This repo is public and git history is permanent: a confidential file
+# committed once stays recoverable from history even after a later commit
+# deletes it. Full client reports (the Fuel iX Fortify UX audit and market
+# analysis) are shared on request by email and must not live in this repo at
+# all — this is a backstop in case a working copy is ever dropped in here.
+reports/
+*-confidential.*
+*-internal.*
+
+# Credentials
+.env
+.env.*
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
