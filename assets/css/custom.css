@@ -1027,9 +1027,10 @@
 	   .hero-layout used to *be* this row — photo+name centred as the hero's
 	   only content. Adding the About Me panel split that in two: the old
 	   rule moved onto .hero-identity unchanged, and .hero-layout became the
-	   outer container that stacks .hero-identity above .hero-about (matching
-	   the phone layout, just with the identity row instead of a plain block)
-	   until there's room for them side by side — see the 2260px tier below. ---- */
+	   outer container that puts .hero-identity and .hero-about side by side
+	   from this same breakpoint on — .hero-about is flex-shrink:1 (see its
+	   own rules further down) specifically so it can keep up beside the
+	   identity row instead of needing a much wider tier of its own. ---- */
 
 	@media screen and (min-width: 737px) {
 
@@ -1041,11 +1042,47 @@
 
 		#intro > .inner {
 			padding: 2.5em 5em;
+			/* .wrapper > .inner's 75em reading cap (main.css) is right for
+			   Other Projects and Publications, but it also caps this row's
+			   available width — same 75em regardless of monitor size —
+			   which starves .hero-about of room no matter how wide the
+			   viewport gets. Same fix as the spotlight rows further down:
+			   the outer box goes full-width, and .hero-text / .hero-about
+			   keep their own independent caps so neither column actually
+			   reads edge-to-edge. */
+			width: 100%;
+		}
+
+		/* Side by side, not stacked: .hero-about is flex-shrink:1 (set
+		   above, next to its other rules) precisely so this can start at
+		   the same breakpoint .hero-identity becomes a row, instead of
+		   waiting for a much wider tier where a *fixed*-width panel would
+		   finally fit. flex-wrap is the fallback for widths too narrow even
+		   for .hero-about's own min-width — .hero-about drops to its own
+		   line below, the same shape as the <737px stack, rather than
+		   overflowing the row. */
+		.hero-layout {
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
+			-moz-flex-wrap: wrap;
+			-webkit-flex-wrap: wrap;
+			-ms-flex-wrap: wrap;
+			flex-wrap: wrap;
+			-moz-align-items: center;
+			-webkit-align-items: center;
+			-ms-align-items: center;
+			align-items: center;
+			-moz-justify-content: center;
+			-webkit-justify-content: center;
+			-ms-justify-content: center;
+			justify-content: center;
+			gap: 2em;
 		}
 
 		/* Photo centered against the text block, the pair centered in
-		   .inner — .hero-layout below (≥2260px) centers the same pair
-		   against .hero-about, so the whole hero reads as one centered
+		   .hero-layout above, so the whole hero reads as one centered
 		   group rather than anchored to either edge. */
 		.hero-identity {
 			display: -moz-flex;
@@ -1061,6 +1098,18 @@
 			-ms-justify-content: center;
 			justify-content: center;
 			text-align: left;
+			/* Shrinkable, not flex-shrink:0 — the photo below keeps its own
+			   0 so it never compresses, but the identity block as a whole
+			   needs to be able to give up some width for .hero-about to
+			   stay beside it down near this tier's own 737px floor, where
+			   the two together are wider than the row has room for. The
+			   give comes out of .hero-text (default flex-shrink:1, wraps
+			   its lines sooner) rather than the photo. */
+			-moz-flex-shrink: 1;
+			-webkit-flex-shrink: 1;
+			-ms-flex-shrink: 1;
+			flex-shrink: 1;
+			min-width: 20em;
 		}
 
 			.hero-photo {
@@ -1072,9 +1121,14 @@
 			}
 
 			/* Capped so the degree lines wrap against the name rather than
-			   running to the edge of the 75em content column. */
+			   running to the edge of the 75em content column. min-width:0
+			   overrides the flex default of auto (≈ content's min-content,
+			   the widest unbreakable word) — without it .hero-identity's
+			   own shrink above has nothing to give, since a flex item won't
+			   shrink past its own content floor unless told to. */
 			.hero-text {
 				max-width: 30em;
+				min-width: 0;
 			}
 
 				/* Tighter than the template's stacked defaults — the block
@@ -1109,20 +1163,74 @@
 
 	/* ---- About Me panel.
 
-		   Sizing/typography apply at every width; how it's positioned next to
-		   .hero-identity is entirely the two blocks below. Below 737px (no
-		   .hero-identity row yet either) it's just the next centred block in
-		   the phone's stack. From 737px to the 2260px tier further down it
-		   stays centred under the identity row rather than going straight to
-		   a side column — .hero-about's own content (two paragraphs) is
-		   comfortably wider than most viewports have spare room for beside a
-		   photo+name row until the layout is genuinely wide. ---- */
+		   Typography (title, paragraphs, links) applies at every width;
+		   whether it's shown at all, and how it's positioned next to
+		   .hero-identity when it is, are the rule right below and the
+		   1000px tier further down.
 
+		   Hidden below 1000px (see that tier further down): under the two-column
+	   width this reads as a matched pair with .hero-identity, but stacked
+	   underneath it — the only option once the row can't fit both — it read
+	   as clutter competing with the name for attention instead. Simpler to
+	   drop it there and let the hero go back to being just the centred
+	   photo+name card, the way it looked before About Me existed, than to
+	   keep tuning a stacked presentation nobody asked for. */
 	.hero-about {
+		display: none;
 		margin: 2em auto 0 auto;
 		max-width: 26em;
 		text-align: left;
 	}
+
+		/* 1000px: verified in a real browser as the narrowest width the row
+		   actually holds at (.hero-identity's own content plus this panel's
+		   18em starting size plus the gap) — below it, even at .hero-about's
+		   full shrink allowance, .hero-identity alone is already close to
+		   the row's available width, so there's nothing to reclaim by
+		   shrinking further. .hero-identity becomes a row on its own at
+		   737px, but this panel stays display:none (base rule above) the
+		   rest of the way to this tier rather than showing it stacked
+		   underneath in the gap between the two. */
+		@media screen and (min-width: 1000px) {
+
+			/* flex-wrap on .hero-layout decides whether this sits beside
+			   .hero-identity or drops below it using each item's *starting*
+			   (flex-basis) size, before shrink is ever applied — so a large
+			   basis relying on shrink to fit was wrapping even at widths
+			   where the shrunk result would have fit fine.
+
+			   12em, not something closer to the 28em cap: body's own
+			   font-size (main.css) steps up partway through this tier —
+			   17.33px to 22px at 1681px is one such step, there's another
+			   around 1281px from the sidebar reappearing — and every em
+			   value in .hero-identity jumps in lockstep at those exact
+			   pixels, photo and text and gap all at once. A basis with
+			   little slack fit right up to each step and then wrapped for
+			   a ~50px range immediately after it, twice, before the row
+			   caught up — reproduced by sweeping every 2px from 1000 to
+			   2600 and checking .hero-about's actual position, not just
+			   spot-checked widths. 12em survives both jumps with room to
+			   spare; flex-grow:1 is what lets it read as the full-width
+			   panel again once there's genuine room to spare, capped at
+			   28em so it doesn't stretch to fill the whole row on its own
+			   when .hero-layout has nothing else to center against it. */
+			.hero-about {
+				display: block;
+				-moz-flex: 1 1 12em;
+				-webkit-flex: 1 1 12em;
+				-ms-flex: 1 1 12em;
+				flex: 1 1 12em;
+				/* Overrides the base rule above, which still governs the
+				   <1000px stack — max-width there caps the centred block;
+				   here it's the flex-grow ceiling instead. */
+				max-width: 28em;
+				min-width: 11em;
+				margin: 0;
+				border-left: solid 1px var(--hairline);
+				padding-left: 2em;
+			}
+
+		}
 
 		.hero-about-title {
 			color: #ffffff;
@@ -1168,13 +1276,6 @@
 				outline-offset: 3px;
 			}
 
-		@media screen and (max-width: 736px) {
-
-			.hero-about {
-				margin-top: 1.75em;
-			}
-
-		}
 
 		@media screen and (min-width: 737px) and (max-width: 1680px) {
 
@@ -1202,103 +1303,15 @@
 				margin-right: 3em;
 			}
 
-		}
-
-		/* Wide enough for the identity row (photo + name/role/credentials)
-		   and a two-paragraph About Me column to sit side by side without
-		   either cramping — narrower than this they stay the stacked,
-		   centred pair above instead of squeezing into a row.
-
-		   2260px, not a rounder number nearby: identity's own content floor
-		   (photo + the longest credential line) plus .hero-about's width
-		   plus the gap and divider measure to just over 2200px in a real
-		   browser — measured directly rather than estimated from em math,
-		   since the row also picks up a wider .hero-identity somewhere
-		   around 1680px (a root font-size step elsewhere in the page, not
-		   this rule) and hand-converting through that gave the wrong number
-		   twice. flex-wrap on .hero-layout below is still there as a safety
-		   net, not the primary mechanism — without raising this breakpoint
-		   to where the row actually fits, every width from 1441px up to
-		   here would silently wrap to .hero-about sitting alone on its own
-		   line, divider and all, instead of using the stacked style above
-		   that's actually designed for the narrower case. */
-		@media screen and (min-width: 2260px) {
-
-			/* .wrapper > .inner's 75em reading cap (main.css) is right for
-			   Other Projects and Publications, but it caps this row's
-			   available width too — same 75em regardless of monitor size —
-			   which left no room for .hero-about at a readable width next to
-			   .hero-identity no matter how wide the viewport got. Same fix
-			   as the spotlight rows below: the outer box goes full-width, and
-			   .hero-text / .hero-about keep their own independent caps so
-			   neither column actually reads edge-to-edge. */
-			#intro > .inner {
-				width: 100%;
+			/* Narrower than the 30em base cap specifically here — the
+			   longest credential line was the biggest single thing standing
+			   between .hero-about and staying on the row through this tier;
+			   wrapping it onto one more line trades a slightly taller
+			   identity column for keeping the layout side-by-side instead
+			   of dropping to the stacked pair below. */
+			.hero-text {
+				max-width: 18em;
 			}
-
-			/* center, not flex-start: the identity+about pair sits in the
-			   middle of the hero as one group, the same way .hero-identity
-			   centers the photo+text pair on its own below this tier.
-			   Cross-axis center is what vertically centers .hero-about
-			   against .hero-identity's full height (photo included) rather
-			   than pinning either edge to a specific line of text. */
-			.hero-layout {
-				display: -moz-flex;
-				display: -webkit-flex;
-				display: -ms-flex;
-				display: flex;
-				-moz-flex-wrap: wrap;
-				-webkit-flex-wrap: wrap;
-				-ms-flex-wrap: wrap;
-				flex-wrap: wrap;
-				-moz-align-items: center;
-				-webkit-align-items: center;
-				-ms-align-items: center;
-				align-items: center;
-				-moz-justify-content: center;
-				-webkit-justify-content: center;
-				-ms-justify-content: center;
-				justify-content: center;
-				gap: 4em;
-			}
-
-				.hero-identity {
-					-moz-flex-shrink: 0;
-					-webkit-flex-shrink: 0;
-					-ms-flex-shrink: 0;
-					flex-shrink: 0;
-				}
-
-				/* Swaps the stacked pair's top margin for a side-by-side
-				   divider — the identity row and the panel now share one
-				   vertical centre instead of the panel trailing beneath it.
-
-				   flex-basis is what actually reserves the width — .hero-text
-				   above is capped with plain max-width, but that only works
-				   there because .hero-identity is the *only* row content.
-				   Here .hero-about shares a flex row with .hero-identity,
-				   which refuses to shrink (flex-shrink:0, so the photo stays
-				   whole); with only max-width set .hero-about was flex's
-				   *leftover* space instead of its own width — max-content
-				   basis meant it collapsed to whatever .hero-identity didn't
-				   use, some 300-400px, not the width below. flex: 0 0 <width>
-				   fixes that width outright; flex-wrap above is what keeps
-				   the row from overflowing instead if a viewport in this
-				   tier is too narrow for both fixed widths plus the gap. */
-				.hero-about {
-					-moz-flex: 0 0 28em;
-					-webkit-flex: 0 0 28em;
-					-ms-flex: 0 0 28em;
-					flex: 0 0 28em;
-					/* The base rule's 26em max-width (for the stacked tiers
-					   below this one) still clamps the box even once flex-
-					   basis sets it wider — max-width wins over flex sizing
-					   regardless of flex-shrink, so it has to go here. */
-					max-width: none;
-					margin: 0;
-					border-left: solid 1px var(--hairline);
-					padding-left: 3em;
-				}
 
 		}
 
@@ -1683,37 +1696,37 @@
 					visibility: hidden;
 				}
 
-				/* Square, and sized off the panel's height rather than a
-				   fixed width, so it scales with the box the tab rail sets.
-
-				   16:9 rather than square, and a fixed width rather than one
-				   derived from the panel height, so all four projects get an
-				   identical frame in an identical position — the box no
-				   longer changes shape with whatever else is in the panel.
-
-				   The ratio is chosen to match the source images: three of
-				   the four are 16:9, so they seat with no crop at all, which
-				   is also what stops the VR Teams group shot losing the
-				   people at both ends. Only Timeoff (3:2) is cropped, and
-				   only slightly.
+				/* 16:9, matching three of the four source images with no
+				   crop at all (Timeoff, 3:2, is the one exception and is
+				   only slightly cropped).
 
 				   position:absolute on the image is load-bearing: an <img>
 				   contributing its intrinsic width (1920px) to the flex base
-				   blows the frame out of the panel. */
+				   blows the frame out of the panel.
+
+				   Width used to be derived from the panel's *height*
+				   (align-self:stretch, then aspect-ratio backed out the
+				   width) — that kept the frame's top/bottom flush with the
+				   title and button, but the panel's height barely changes
+				   with window width (it's set by the tallest tab's text, in
+				   the grid rule above), so the image stayed close to a fixed
+				   width no matter how narrow the panel got. On a laptop
+				   window short of full-screen that squeezed .tabs-panel-body
+				   down to under 150px, which is what was pushing its text
+				   past the card's edge. flex-basis as a percentage instead
+				   means the image shrinks (and, via the ratio, gets shorter)
+				   together with the panel, leaving .tabs-panel-body a
+				   consistent share of whatever width is actually there. */
 				.tabs-panel-media {
 					position: relative;
-					-moz-flex: 0 0 auto;
-					-webkit-flex: 0 0 auto;
-					-ms-flex: 0 0 auto;
-					flex: 0 0 auto;
-					/* Stretched, so the frame spans the card's full content
-					   height. That is what lets the title sit on the image's
-					   top edge and the button on its bottom edge — both
-					   columns share one band. Width is derived from that
-					   height by the ratio, which keeps the 16:9 crop. */
-					-moz-align-self: stretch;
-					-ms-align-self: stretch;
-					align-self: stretch;
+					-moz-flex: 0 1 42%;
+					-webkit-flex: 0 1 42%;
+					-ms-flex: 0 1 42%;
+					flex: 0 1 42%;
+					min-width: 8em;
+					-moz-align-self: center;
+					-ms-align-self: center;
+					align-self: center;
 					aspect-ratio: 16 / 9;
 					background-color: rgba(255, 255, 255, 0.05);
 					border-radius: 0.35em;
@@ -1902,9 +1915,9 @@
 				}
 
 				/* Full-width thumbnail above the copy. flex-basis has to be
-				   reset here — the column direction makes the 15em basis a
-				   *height*, which fought the 16:9 ratio and produced a tall
-				   portrait box. */
+				   reset here — the column direction makes the base rule's
+				   42% a *height*, which fought the 16:9 ratio and produced a
+				   tall portrait box. */
 				.tabs-panel-media {
 					-moz-flex: 0 0 auto;
 					-webkit-flex: 0 0 auto;
