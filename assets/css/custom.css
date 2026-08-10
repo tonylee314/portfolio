@@ -465,6 +465,17 @@
 		margin-left: 14em;
 	}
 
+	/* main.css only centres .wrapper > .inner for the #header layout used by
+	   the secondary pages (#header + #wrapper > .wrapper > .inner) — the
+	   sidebar layout this page uses never got the equivalent rule. #two and
+	   #three (Other Projects, Publications) are capped at .wrapper > .inner's
+	   75em width but were left uncentred, so past ~1280px + the 14em sidebar
+	   they sat flush against the sidebar with a blank strip down the right
+	   instead of balanced margins either side. */
+	#sidebar + #wrapper > .wrapper > .inner {
+		margin: 0 auto;
+	}
+
 	/* Nav sits at the top instead of vertically centred, so the links
 	   don't cluster in the middle of a tall column. */
 	#sidebar > .inner {
@@ -1011,7 +1022,14 @@
 	   Below 737px .hero-layout stays a plain block, so the phone keeps the
 	   centred stack it already had. These rules come last on purpose — the
 	   blocks above set .hero-photo, #intro > .inner and the fullscreen
-	   min-height at equal specificity, and media queries don't break ties. ---- */
+	   min-height at equal specificity, and media queries don't break ties.
+
+	   .hero-layout used to *be* this row — photo+name centred as the hero's
+	   only content. Adding the About Me panel split that in two: the old
+	   rule moved onto .hero-identity unchanged, and .hero-layout became the
+	   outer container that stacks .hero-identity above .hero-about (matching
+	   the phone layout, just with the identity row instead of a plain block)
+	   until there's room for them side by side — see the 2260px tier below. ---- */
 
 	@media screen and (min-width: 737px) {
 
@@ -1025,7 +1043,11 @@
 			padding: 2.5em 5em;
 		}
 
-		.hero-layout {
+		/* Photo centered against the text block, the pair centered in
+		   .inner — .hero-layout below (≥2260px) centers the same pair
+		   against .hero-about, so the whole hero reads as one centered
+		   group rather than anchored to either edge. */
+		.hero-identity {
 			display: -moz-flex;
 			display: -webkit-flex;
 			display: -ms-flex;
@@ -1085,6 +1107,75 @@
 
 	}
 
+	/* ---- About Me panel.
+
+		   Sizing/typography apply at every width; how it's positioned next to
+		   .hero-identity is entirely the two blocks below. Below 737px (no
+		   .hero-identity row yet either) it's just the next centred block in
+		   the phone's stack. From 737px to the 2260px tier further down it
+		   stays centred under the identity row rather than going straight to
+		   a side column — .hero-about's own content (two paragraphs) is
+		   comfortably wider than most viewports have spare room for beside a
+		   photo+name row until the layout is genuinely wide. ---- */
+
+	.hero-about {
+		margin: 2em auto 0 auto;
+		max-width: 26em;
+		text-align: left;
+	}
+
+		.hero-about-title {
+			color: #ffffff;
+			font-size: 1em;
+			font-weight: bold;
+			letter-spacing: 0.02em;
+			margin: 0 0 0.6em 0;
+		}
+
+	/* #intro p is 1.25em at ID specificity (main.css) — .hero-about needs
+	   its own ID-qualified rule to read as body copy instead, the same
+	   reason .hero-role and .hero-school above are #intro-prefixed. Colour
+	   matches .hero-education's, already checked against the gradient's
+	   brightest stop at 5.25:1. */
+	#intro .hero-about p {
+		color: rgba(255, 255, 255, 0.7);
+		font-size: 0.95em;
+		line-height: 1.7;
+		margin: 0 0 1em 0;
+	}
+
+		#intro .hero-about p:last-child {
+			margin-bottom: 0;
+		}
+
+		.hero-about strong {
+			color: #ffffff;
+		}
+
+		/* Inline text links, not nav — need their own underline rather than
+		   colour alone to read as clickable against body copy. */
+		.hero-about a {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+			color: #ffffff;
+		}
+
+			.hero-about a:hover {
+				border-bottom-color: #ffffff;
+			}
+
+			.hero-about a:focus-visible {
+				outline: 3px solid #ffffff;
+				outline-offset: 3px;
+			}
+
+		@media screen and (max-width: 736px) {
+
+			.hero-about {
+				margin-top: 1.75em;
+			}
+
+		}
+
 		@media screen and (min-width: 737px) and (max-width: 1680px) {
 
 			#intro > .inner {
@@ -1113,6 +1204,104 @@
 
 		}
 
+		/* Wide enough for the identity row (photo + name/role/credentials)
+		   and a two-paragraph About Me column to sit side by side without
+		   either cramping — narrower than this they stay the stacked,
+		   centred pair above instead of squeezing into a row.
+
+		   2260px, not a rounder number nearby: identity's own content floor
+		   (photo + the longest credential line) plus .hero-about's width
+		   plus the gap and divider measure to just over 2200px in a real
+		   browser — measured directly rather than estimated from em math,
+		   since the row also picks up a wider .hero-identity somewhere
+		   around 1680px (a root font-size step elsewhere in the page, not
+		   this rule) and hand-converting through that gave the wrong number
+		   twice. flex-wrap on .hero-layout below is still there as a safety
+		   net, not the primary mechanism — without raising this breakpoint
+		   to where the row actually fits, every width from 1441px up to
+		   here would silently wrap to .hero-about sitting alone on its own
+		   line, divider and all, instead of using the stacked style above
+		   that's actually designed for the narrower case. */
+		@media screen and (min-width: 2260px) {
+
+			/* .wrapper > .inner's 75em reading cap (main.css) is right for
+			   Other Projects and Publications, but it caps this row's
+			   available width too — same 75em regardless of monitor size —
+			   which left no room for .hero-about at a readable width next to
+			   .hero-identity no matter how wide the viewport got. Same fix
+			   as the spotlight rows below: the outer box goes full-width, and
+			   .hero-text / .hero-about keep their own independent caps so
+			   neither column actually reads edge-to-edge. */
+			#intro > .inner {
+				width: 100%;
+			}
+
+			/* center, not flex-start: the identity+about pair sits in the
+			   middle of the hero as one group, the same way .hero-identity
+			   centers the photo+text pair on its own below this tier.
+			   Cross-axis center is what vertically centers .hero-about
+			   against .hero-identity's full height (photo included) rather
+			   than pinning either edge to a specific line of text. */
+			.hero-layout {
+				display: -moz-flex;
+				display: -webkit-flex;
+				display: -ms-flex;
+				display: flex;
+				-moz-flex-wrap: wrap;
+				-webkit-flex-wrap: wrap;
+				-ms-flex-wrap: wrap;
+				flex-wrap: wrap;
+				-moz-align-items: center;
+				-webkit-align-items: center;
+				-ms-align-items: center;
+				align-items: center;
+				-moz-justify-content: center;
+				-webkit-justify-content: center;
+				-ms-justify-content: center;
+				justify-content: center;
+				gap: 4em;
+			}
+
+				.hero-identity {
+					-moz-flex-shrink: 0;
+					-webkit-flex-shrink: 0;
+					-ms-flex-shrink: 0;
+					flex-shrink: 0;
+				}
+
+				/* Swaps the stacked pair's top margin for a side-by-side
+				   divider — the identity row and the panel now share one
+				   vertical centre instead of the panel trailing beneath it.
+
+				   flex-basis is what actually reserves the width — .hero-text
+				   above is capped with plain max-width, but that only works
+				   there because .hero-identity is the *only* row content.
+				   Here .hero-about shares a flex row with .hero-identity,
+				   which refuses to shrink (flex-shrink:0, so the photo stays
+				   whole); with only max-width set .hero-about was flex's
+				   *leftover* space instead of its own width — max-content
+				   basis meant it collapsed to whatever .hero-identity didn't
+				   use, some 300-400px, not the width below. flex: 0 0 <width>
+				   fixes that width outright; flex-wrap above is what keeps
+				   the row from overflowing instead if a viewport in this
+				   tier is too narrow for both fixed widths plus the gap. */
+				.hero-about {
+					-moz-flex: 0 0 28em;
+					-webkit-flex: 0 0 28em;
+					-ms-flex: 0 0 28em;
+					flex: 0 0 28em;
+					/* The base rule's 26em max-width (for the stacked tiers
+					   below this one) still clamps the box even once flex-
+					   basis sets it wider — max-width wins over flex sizing
+					   regardless of flex-shrink, so it has to go here. */
+					max-width: none;
+					margin: 0;
+					border-left: solid 1px var(--hairline);
+					padding-left: 3em;
+				}
+
+		}
+
 /* ---- Spotlights: tighter project rows, proportionally smaller images ---- */
 
 	.spotlights > section {
@@ -1128,6 +1317,70 @@
 		   almost all of it the template's stacked 2em margins. */
 		.spotlights > section > .content {
 			padding: 1.5em 3em;
+		}
+
+		/* Above the row-stacks-to-column breakpoint (980px, below), lock the
+		   image:content split to a fixed 27.5:72.5 ratio — the proportion the
+		   19em/50em pair above happens to shrink to once the row is narrower
+		   than their combined width. main.css never gives either box a
+		   flex-grow (only a stray -ms-flex:1 that no evergreen browser reads),
+		   so past that width they stop shrinking, freeze at 19em/50em, and
+		   the row leaves dead space on the right on anything wider than
+		   about 1104px — a 32" monitor most of all. Percentage flex-basis
+		   with grow/shrink both off scales the same two boxes to fill
+		   whatever width the row actually has, at every size above the
+		   stacking breakpoint, instead of only at the one width where the
+		   fixed em values happen to add up correctly. */
+		@media screen and (min-width: 981px) {
+
+			/* .spotlights > section is a flex row with no align-items of its
+			   own, so it defaults to stretch: every child, image included,
+			   is forced to the row's height — which main.css derives from
+			   .content (whatever the copy needs), not from the image. Width
+			   here scales with viewport (27.5% of the row) but height didn't
+			   move with it, so the box's aspect ratio drifted wider at every
+			   breakpoint — measured at ~1.2:1 near 980px and over 3:1 past
+			   3000px — and background-size:cover reframes to whatever aspect
+			   it's handed, so the same photo visibly recrops and rezooms as
+			   the window resizes. aspect-ratio plus opting out of stretch is
+			   what actually fixes that: height now derives from this box's
+			   own width, the same ratio at every size, instead of an
+			   unrelated sibling's. */
+			.spotlights > section > .image {
+				-moz-flex: 0 0 27.5%;
+				-webkit-flex: 0 0 27.5%;
+				-ms-flex: 0 0 27.5%;
+				flex: 0 0 27.5%;
+				width: auto;
+				aspect-ratio: 3 / 2;
+				-moz-align-self: center;
+				-ms-align-self: center;
+				align-self: center;
+			}
+
+			.spotlights > section > .content {
+				-moz-flex: 0 0 72.5%;
+				-webkit-flex: 0 0 72.5%;
+				-ms-flex: 0 0 72.5%;
+				flex: 0 0 72.5%;
+				min-width: 0;
+				width: auto;
+			}
+
+		}
+
+		/* The 72.5% content box above is sized to balance against the image,
+		   not to set a comfortable line length — on a wide monitor it keeps
+		   growing long after the copy should have wrapped. Capping .inner
+		   instead of .content stops the paragraph and the "Learn more"
+		   button at the same fixed column: .actions is flex
+		   justify-content:flex-end, so once its own box stops growing the
+		   button settles against that column's right edge instead of
+		   trailing off toward the row's far edge by the logo. 50em matches
+		   the content box's own pre-fix width, so the wrap point looks the
+		   same as before this change at any size. */
+		.spotlights > section > .content > .inner {
+			max-width: 50em;
 		}
 
 			.spotlights > section > .content h2 {
@@ -1184,21 +1437,29 @@
 
 		}
 
+		/* 32vh here tied the image's height to viewport height rather than
+		   its own width, the same coupling-to-something-unrelated problem
+		   as the row layout above, just via a different axis — resize the
+		   window (or rotate the phone) and the crop shifts even though the
+		   image's own width didn't change. aspect-ratio keeps it a fixed
+		   16:9 of whatever width the stacked column actually has. */
 		@media screen and (max-width: 980px) {
 
 			.spotlights > section > .image {
 				width: 100%;
-				height: 32vh;
+				height: auto;
+				/* main.css's own max-width:736px tier sets a 15em min-height
+				   (on top of a 50vh height, also overridden above) — left
+				   in place, it floors the box above what 16:9 actually
+				   works out to on a narrow phone and reintroduces the same
+				   drift this rule exists to remove. */
+				min-height: 0;
+				aspect-ratio: 16 / 9;
 			}
 
 		}
 
 		@media screen and (max-width: 736px) {
-
-			.spotlights > section > .image {
-				height: 32vh;
-				min-height: 12em;
-			}
 
 			.spotlights > section > .content {
 				padding: 1.75em 2em;
