@@ -1483,6 +1483,7 @@
 /* ---- Remaining sections: trim vertical padding ---- */
 
 	#two > .inner,
+	#involvement > .inner,
 	#three > .inner {
 		padding: 3em 5em 2em 5em;
 	}
@@ -1490,6 +1491,7 @@
 	@media screen and (max-width: 1680px) {
 
 		#two > .inner,
+		#involvement > .inner,
 		#three > .inner {
 			padding: 3em 4em 2em 4em;
 		}
@@ -1499,6 +1501,7 @@
 	@media screen and (max-width: 736px) {
 
 		#two > .inner,
+		#involvement > .inner,
 		#three > .inner {
 			padding: 2em 2em 1em 2em;
 		}
@@ -1537,7 +1540,7 @@
 		   it stretches from the top of the heading down to the last tab. */
 		.tabs-side {
 			/* 18em fits the longest tab label; the previous 22em was sized
-			   for a lead-in line that has since been shortened, and the
+			   for a lead-in line that has since been removed, and the
 			   surplus was coming straight out of the panel's title width. */
 			-moz-flex: 0 0 18em;
 			-webkit-flex: 0 0 18em;
@@ -1545,10 +1548,6 @@
 			flex: 0 0 18em;
 			padding-right: 1.5em;
 		}
-
-			.tabs-side > p {
-				margin-bottom: 1.5em;
-			}
 
 		.tabs-list {
 			display: -moz-flex;
@@ -1597,7 +1596,10 @@
 			height: auto;
 			letter-spacing: 0;
 			line-height: 1.5;
-			padding: 0.9em 1em;
+			/* The rail sets the card's height, so every em of tab padding is
+			   an em the card grows by. At four tabs 0.9em was free; the fifth
+			   pushed the card past what its own contents could fill. */
+			padding: 0.75em 1em;
 			text-align: left;
 			text-transform: none;
 			white-space: normal;
@@ -1716,13 +1718,21 @@
 				   past the card's edge. flex-basis as a percentage instead
 				   means the image shrinks (and, via the ratio, gets shorter)
 				   together with the panel, leaving .tabs-panel-body a
-				   consistent share of whatever width is actually there. */
+				   consistent share of whatever width is actually there.
+
+				   The share is width-based, so it does not follow the card
+				   when the rail grows: the fifth tab made the card taller
+				   while the frame stayed the size four tabs had called for,
+				   and the surplus showed up as dead space above and below it.
+				   42% -> 48% puts the image back at roughly three quarters of
+				   the card's inner height, where it sat before. Adding a
+				   sixth tab means revisiting this number again. */
 				.tabs-panel-media {
 					position: relative;
-					-moz-flex: 0 1 42%;
-					-webkit-flex: 0 1 42%;
-					-ms-flex: 0 1 42%;
-					flex: 0 1 42%;
+					-moz-flex: 0 1 48%;
+					-webkit-flex: 0 1 48%;
+					-ms-flex: 0 1 48%;
+					flex: 0 1 48%;
 					min-width: 8em;
 					-moz-align-self: center;
 					-ms-align-self: center;
@@ -2135,6 +2145,148 @@
 			.pub-tag {
 				justify-self: end;
 				margin: 0 0 0.5em 0;
+			}
+
+		}
+
+/* ---- Leadership & Involvement ---- */
+
+	/* Raised card, same treatment (and the same --ink-600 "raised
+	   surfaces" token) as .tabs-panels in Other Projects — that card is
+	   why logos read better there than they did sitting flat on this
+	   section's own --ink-750 background. The logo PNGs are recoloured
+	   to clear 4.5:1 against this exact colour (see images/logos/), so
+	   changing this token means re-running that pass. */
+	.involvement-list {
+		background-color: var(--ink-600);
+		border: solid 1px var(--hairline);
+		border-radius: 0.35em;
+		list-style: none;
+		margin: 1.5em 0 0 0;
+		padding: 0.5em 2em;
+	}
+
+		.involvement-list > li {
+			border-top: solid 1px var(--hairline);
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
+			-moz-align-items: flex-start;
+			-webkit-align-items: flex-start;
+			-ms-align-items: flex-start;
+			align-items: flex-start;
+			gap: 1.1em;
+			margin: 0;
+			padding: 1.1em 0;
+		}
+
+			.involvement-list > li:first-child {
+				border-top: 0;
+			}
+
+		/* Same circular badge treatment as .tabs-panel-title .icon, so a
+		   role still reads at a glance if the logo beside it is slow to
+		   load or, on the org's own page, doesn't exist yet. */
+		.involvement-icon {
+			background-color: var(--accent-tint);
+			border-radius: 100%;
+			color: var(--accent-deep);
+			font-size: 0.85em;
+			height: 2.6em;
+			line-height: 2.6em;
+			text-align: center;
+			width: 2.6em;
+			-moz-flex-shrink: 0;
+			-webkit-flex-shrink: 0;
+			-ms-flex-shrink: 0;
+			flex-shrink: 0;
+		}
+
+		/* min-width:0 lets a long role title wrap instead of pushing the
+		   fixed-width logo off the row's right edge as it narrows. */
+		.involvement-body {
+			-moz-flex: 1;
+			-webkit-flex: 1;
+			-ms-flex: 1;
+			flex: 1;
+			min-width: 0;
+		}
+
+		.involvement-role {
+			color: #ffffff;
+			font-size: 0.95em;
+			margin: 0 0 0.2em 0;
+		}
+
+		.involvement-org {
+			color: rgba(255, 255, 255, 0.8);
+			font-size: 0.8em;
+			line-height: 1.6;
+			margin: 0 0 0.15em 0;
+		}
+
+		.involvement-meta {
+			color: rgba(255, 255, 255, 0.6);
+			font-size: 0.78em;
+			margin: 0;
+		}
+
+		/* Right-aligned logo, sized to the same box every row (matching
+		   .proj-logo's 5.8em x 2.6em elsewhere on the page). Full colour,
+		   straight on the section background — no card behind it — since
+		   these mixed-colour org marks (unlike the single-tone wordmarks
+		   used elsewhere) are meant to keep their own palette.
+		   margin-left:auto pins the box to the row's right edge without an
+		   extra wrapper. */
+		.involvement-logo {
+			-moz-align-items: center;
+			-webkit-align-items: center;
+			-ms-align-items: center;
+			align-items: center;
+			display: -moz-flex;
+			display: -webkit-flex;
+			display: -ms-flex;
+			display: flex;
+			-moz-flex-shrink: 0;
+			-webkit-flex-shrink: 0;
+			-ms-flex-shrink: 0;
+			flex-shrink: 0;
+			height: 2.6em;
+			-moz-justify-content: center;
+			-webkit-justify-content: center;
+			-ms-justify-content: center;
+			justify-content: center;
+			margin-left: auto;
+			width: 5.8em;
+		}
+
+			.involvement-logo img {
+				display: block;
+				height: auto;
+				max-height: 100%;
+				max-width: 100%;
+				object-fit: contain;
+				width: auto;
+			}
+
+		/* Below this, four columns (icon, text, meta, logo) is too tight
+		   for a role title to wrap cleanly. The logo drops under the text,
+		   right-aligned to match its desktop position; the icon stays put
+		   as the row's anchor. */
+		@media screen and (max-width: 480px) {
+
+			.involvement-list > li {
+				-moz-flex-wrap: wrap;
+				-webkit-flex-wrap: wrap;
+				-ms-flex-wrap: wrap;
+				flex-wrap: wrap;
+			}
+
+			.involvement-logo {
+				height: 2.2em;
+				margin-top: 0.75em;
+				width: 5.2em;
 			}
 
 		}
