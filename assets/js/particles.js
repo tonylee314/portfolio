@@ -56,9 +56,22 @@
 			opacity: opt(host, 'particle-opacity', 0.6),
 			glow: opt(host, 'glow-intensity', 10),
 			speed: opt(host, 'movement-speed', 0.5),
-			influence: opt(host, 'mouse-influence', 100),
-			color: host.getAttribute('data-particle-color') || '#ffffff'
+			influence: opt(host, 'mouse-influence', 100)
 		};
+
+		var explicitColor = host.getAttribute('data-particle-color');
+
+		// Re-read every frame rather than once at init: an explicit
+		// data-particle-color always wins (the hero and secondary-page
+		// header pin theirs there, since both stay a fixed dark gradient
+		// regardless of site theme), otherwise it follows --particle-color
+		// — which does change, live, when the theme toggle flips
+		// [data-theme] on <html>, no reinitialising the field required.
+		function color() {
+			return explicitColor
+				|| getComputedStyle(host).getPropertyValue('--particle-color').trim()
+				|| '#ffffff';
+		}
 
 		var canvas = document.createElement('canvas'),
 			ctx = canvas.getContext('2d'),
@@ -166,12 +179,16 @@
 
 			ctx.clearRect(0, 0, width, height);
 
+			// One lookup per frame, not per particle — cheap either way at
+			// field sizes here, but no reason to repeat it 50 times.
+			var fill = color();
+
 			particles.forEach(function (p) {
 				ctx.save();
-				ctx.shadowColor = cfg.color;
+				ctx.shadowColor = fill;
 				ctx.shadowBlur = cfg.glow * p.glowMultiplier * 2;
 				ctx.globalAlpha = p.opacity;
-				ctx.fillStyle = cfg.color;
+				ctx.fillStyle = fill;
 				ctx.beginPath();
 				ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
 				ctx.fill();

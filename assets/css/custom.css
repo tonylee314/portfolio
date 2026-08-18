@@ -23,7 +23,37 @@
      hairline border rather than relying on fill alone.
 
    True #861F41 is kept as --accent-deep for the hero gradient and hover
-   states, where an edge already exists.                                    */
+   states, where an edge already exists.
+
+   ---- Light theme ----
+
+   Every colour below is a custom property so a second palette is just a
+   second set of values under [data-theme="light"] — the several hundred
+   rules elsewhere in this file never name a colour directly, only a token,
+   so they repaint automatically. Three exceptions carry their own fixed
+   palette regardless of theme: the hero (#intro), the secondary-page header
+   band (#header), and anything inside them (hero photo ring, hero-contact,
+   hero-about, header nav). Both bands paint the same near-black-to-maroon
+   gradient with white text — a masthead moment, not a content surface — so
+   #intro and #header re-pin the tokens they use back to their dark values
+   a few rules down, and the rest of their component rules were left as the
+   literal white/rgba(255,255,255,…) values they already had rather than
+   converted to tokens, since a literal value can't be reached by the
+   [data-theme="light"] override at all.
+
+   The ink scale inverts rather than mirrors: --ink-900 stays the "least
+   elevated" step and --ink-600 the "most elevated" in both themes (matching
+   how dark-theme elevation already works — lighter = closer to the viewer),
+   which is why --ink-600 becomes pure white rather than --ink-900 becoming
+   pure black. --accent-deep (true #861F41 maroon) is left unchanged in both
+   themes — on light surfaces it already clears 7–9:1 unlifted, so it doubles
+   as the light theme's base accent fill; --accent-strong is a new, separate
+   token for the *hover* state so the two remain visually distinct once
+   --accent and --accent-deep are the same colour in light mode. --focus-ring
+   is only used where a ring sits on a plain content surface (nav links, tab
+   buttons, publication links); every focus ring that sits on the maroon
+   accent fill itself was left as literal white, since that fill is dark
+   enough in both themes for white to hold 6:1+ either way. */
 
 	:root {
 		--ink-900: #0e0d13;   /* footer — the deepest step */
@@ -34,22 +64,165 @@
 
 		--accent: #b0305c;        /* fills that need a visible edge on ink */
 		--accent-deep: #861F41;   /* true VT maroon: gradient tail, hovers */
+		--accent-strong: #861F41; /* hover/pressed state of --accent — same as
+		                             --accent-deep in dark mode, so this is a
+		                             no-op here; light mode gives it its own
+		                             deeper value below. */
 		--accent-text: #e0708f;   /* accent as text on ink — 6.05:1 */
 
 		/* Badge/puck fill behind a maroon glyph. Light enough that the true
 		   VT maroon reads on it at 7.4:1 — so icons get the real brand
 		   colour rather than the lifted --accent, which only exists for
-		   fills that must hold an edge against ink. */
+		   fills that must hold an edge against ink. Identical in both
+		   themes: the pairing is self-contained and never touches a
+		   surface token. */
 		--accent-tint: #efe3e8;
 
 		--hairline: rgba(255, 255, 255, 0.1);
 		--hairline-strong: rgba(255, 255, 255, 0.18);
+
+		/* Text tiers, replacing what used to be individually hand-tuned
+		   rgba(255,255,255,…) values scattered per component. Consolidating
+		   ~10 near-duplicate opacities (0.6/0.65/0.7/0.75/0.78/0.8/0.85/0.9)
+		   down to three tiers changes nothing visible in dark mode — the
+		   differences were imperceptible — but means only three values need
+		   a light-mode counterpart instead of ten. */
+		--text-1: #ffffff;                    /* headings, active/hover states */
+		--text-2: rgba(255, 255, 255, 0.8);   /* body copy: descriptions, meta */
+		--text-3: rgba(255, 255, 255, 0.65);  /* least emphasis: captions, dates */
+
+		/* Dividers/underlines above the two hairline tiers. */
+		--border-visible: rgba(255, 255, 255, 0.22);
+		--border-emphasis: rgba(255, 255, 255, 0.5);
+
+		/* Subtle fills: alternating rows, placeholder media, nav underline
+		   track. */
+		--surface-tint-1: rgba(255, 255, 255, 0.035);
+		--surface-tint-2: rgba(255, 255, 255, 0.05);
+		--surface-tint-3: rgba(255, 255, 255, 0.12);
+
+		/* Focus rings on plain content surfaces only — see note above. */
+		--focus-ring: #ffffff;
+
+		/* Read by particles.js every frame via getComputedStyle, so the
+		   canvas repaints on a theme change with no JS of its own. #intro
+		   and #header re-pin this to white a few rules down. */
+		--particle-color: #ffffff;
+	}
+
+	/* No prefers-color-scheme fallback here on purpose: dark is the site's
+	   standard regardless of system preference — the inline head script
+	   (first thing in <head> on every page) always sets [data-theme] to
+	   "dark" unless localStorage has an explicit "light" from a previous
+	   visit, and the base :root above already carries the dark values, so
+	   a no-JS visitor gets the same dark-by-default result with no media
+	   query needed. */
+
+	:root[data-theme="light"] {
+		--ink-900: #e3e0e6;
+		--ink-800: #f8f7f6;
+		--ink-750: #f2f0ee;
+		--ink-700: #ece9e5;
+		--ink-600: #ffffff;
+
+		--accent: #861F41;
+		--accent-deep: #861F41;
+		--accent-strong: #6b1833;
+		--accent-text: #861F41;
+
+		--hairline: rgba(20, 17, 25, 0.12);
+		--hairline-strong: rgba(20, 17, 25, 0.2);
+
+		--text-1: #14111a;
+		--text-2: rgba(20, 17, 25, 0.75);
+		--text-3: rgba(20, 17, 25, 0.62);
+
+		--border-visible: rgba(20, 17, 25, 0.25);
+		--border-emphasis: rgba(20, 17, 25, 0.45);
+
+		--surface-tint-1: rgba(20, 17, 25, 0.035);
+		--surface-tint-2: rgba(20, 17, 25, 0.045);
+		--surface-tint-3: rgba(20, 17, 25, 0.1);
+
+		--focus-ring: #14111a;
+		--particle-color: #14111a;
+	}
+
+	/* Explicit dark choice has to be able to win even when the system
+	   preference is light — the media query above has no [data-theme]
+	   attribute to lose to, so without this it would keep beating a plain
+	   :root on specificity ties going the other way. Values are identical
+	   to the base :root; this rule exists purely to outrank the media
+	   query at the same specificity as [data-theme="light"]. */
+	:root[data-theme="dark"] {
+		--ink-900: #0e0d13;
+		--ink-800: #14131a;
+		--ink-750: #17161e;
+		--ink-700: #1c1b24;
+		--ink-600: #24222e;
+
+		--accent: #b0305c;
+		--accent-deep: #861F41;
+		--accent-strong: #861F41;
+		--accent-text: #e0708f;
+
+		--hairline: rgba(255, 255, 255, 0.1);
+		--hairline-strong: rgba(255, 255, 255, 0.18);
+
+		--text-1: #ffffff;
+		--text-2: rgba(255, 255, 255, 0.8);
+		--text-3: rgba(255, 255, 255, 0.65);
+
+		--border-visible: rgba(255, 255, 255, 0.22);
+		--border-emphasis: rgba(255, 255, 255, 0.5);
+
+		--surface-tint-1: rgba(255, 255, 255, 0.035);
+		--surface-tint-2: rgba(255, 255, 255, 0.05);
+		--surface-tint-3: rgba(255, 255, 255, 0.12);
+
+		--focus-ring: #ffffff;
+		--particle-color: #ffffff;
+	}
+
+	/* The hero and the secondary-page header band are a white-to-maroon
+	   (light theme) or near-black-to-maroon (dark theme) gradient either
+	   way, so their text stays white in both — only --text-1/2/3,
+	   --hairline and --focus-ring are re-pinned here. --ink-800 and
+	   --particle-color are deliberately left OUT of this pin: the gradient
+	   itself is theme-reactive (see #intro/#header further down) and the
+	   particle field is meant to flip to dark dots in light mode, so both
+	   need to keep following [data-theme] rather than being frozen here. */
+	#intro,
+	#header {
+		--hairline: rgba(255, 255, 255, 0.1);
+		--text-1: #ffffff;
+		--text-2: rgba(255, 255, 255, 0.8);
+		--text-3: rgba(255, 255, 255, 0.65);
+		--focus-ring: #ffffff;
 	}
 
 /* ---- Surfaces ---- */
 
+	/* main.css sets body's text colour to a flat rgba(255,255,255,0.55) —
+	   fine against the original dark background by coincidence, but every
+	   paragraph without a more specific rule inherits it, which is most of
+	   the actual prose on the site (every secondary page's Goal/Background/
+	   Methods copy is plain <p> with no class). Token instead of literal:
+	   it needs to flip in light mode same as everything else, and it's
+	   close enough to --text-2 already used for body copy elsewhere that
+	   switching to it changes nothing visible in dark mode. */
 	body {
 		background: var(--ink-800);
+		color: var(--text-2);
+	}
+
+	/* Same story as body's colour above: main.css hardcodes every heading
+	   to solid white, which happened to double as "the dark theme's ink
+	   colour" without anyone having to say so. Headings appear throughout
+	   the theme-reactive content (section titles, secondary-page "Goal" /
+	   "Background" headings, .pub-group-title), so this needs to flip too. */
+	h1, h2, h3, h4, h5, h6 {
+		color: var(--text-1);
 	}
 
 	/* style1 is the hero, which paints its own gradient below; the rest are
@@ -106,9 +279,11 @@
 		background-color: var(--ink-900);
 	}
 
-	/* The secondary pages' hero header. Same ink-to-maroon gradient as
-	   #intro so the two skeletons read as one site, and enough vertical
-	   room for the particle field behind it to register. */
+	/* The secondary pages' hero header. Same treatment as #intro so the
+	   two skeletons read as one site — near-black-to-maroon gradient in
+	   dark theme, flat maroon in light theme (see the override below),
+	   both holding white text throughout (see the #intro/#header token
+	   pin above). */
 	#header {
 		background-color: var(--ink-800);
 		background-image:
@@ -119,6 +294,13 @@
 		padding: 3em 2em;
 		position: relative;
 	}
+
+		/* Flat maroon rather than a gradient — see #intro's own override for
+		   why. */
+		:root[data-theme="light"] #header {
+			background-color: var(--accent-deep);
+			background-image: none;
+		}
 
 		/* Above the particle layer. */
 		#header > .title,
@@ -140,7 +322,7 @@
 			}
 
 			#header > nav > ul > li a:focus-visible {
-				outline: 3px solid #ffffff;
+				outline: 3px solid var(--focus-ring);
 				outline-offset: 3px;
 			}
 
@@ -215,10 +397,20 @@
 			   no information the section text does not already give, and it
 			   is the only treatment that makes six differently-built files
 			   look like one set. Held just under full white so the logos sit
-			   below the headings in the hierarchy. */
+			   below the headings in the hierarchy.
+
+			   Light theme flattens to black instead (override below) — these
+			   sit directly on --ink-700/750, which is a light near-white
+			   surface there, so a white silhouette would vanish. */
 			-webkit-filter: brightness(0) invert(1);
 			filter: brightness(0) invert(1);
 			opacity: 0.9;
+		}
+
+		:root[data-theme="light"] .proj-logo img {
+			-webkit-filter: brightness(0);
+			filter: brightness(0);
+			opacity: 0.85;
 		}
 
 		/* Every other mark is width-bound in the shared box, so it has slack
@@ -231,8 +423,13 @@
 		}
 
 		/* Already light-on-transparent — knocking it out would erase the
-		   bulls and leave a solid white slab. */
-		.proj-logo--plain img {
+		   bulls and leave a solid white slab. Self-contained (BRG carries
+		   its own red backing block), so no light-theme override needed —
+		   but it needs re-asserting at matching specificity to the light
+		   override above, or [data-theme="light"] .proj-logo img would
+		   still win and flatten it to a black slab instead. */
+		.proj-logo--plain img,
+		:root[data-theme="light"] .proj-logo--plain img {
 			-webkit-filter: none;
 			filter: none;
 			opacity: 1;
@@ -314,7 +511,7 @@
 
 		.spotlights > section h2 a:focus-visible,
 		.tabs-panel-title a:focus-visible {
-			outline: 3px solid #ffffff;
+			outline: 3px solid var(--focus-ring);
 			outline-offset: 3px;
 		}
 
@@ -346,7 +543,7 @@
 		}
 
 		.fig figcaption {
-			color: rgba(255, 255, 255, 0.6);
+			color: var(--text-3);
 			font-size: 0.85em;
 			line-height: 1.6;
 			margin-top: 0.85em;
@@ -399,11 +596,23 @@
 	   background, maroon or ink. Raised to clear AA. ---- */
 
 	#footer > .inner .menu {
-		color: rgba(255, 255, 255, 0.6);
+		color: var(--text-3);
 	}
 
 /* ---- Buttons: the template's outline pill, with maroon reserved for the
-	   one primary action rather than every control. ---- */
+	   one primary action rather than every control. ----
+
+	   main.css hardcodes the base .button to a 0.15-alpha white border and
+	   solid white text, both !important — every "Learn more" pill on the
+	   page (spotlights, Other Projects, the Publications tags) is this
+	   default variant, not .primary, so those two need tokens at matching
+	   specificity or they go white-on-white the moment the surface behind
+	   them turns light. .primary is a separate, higher-specificity rule
+	   below and doesn't inherit from this one. */
+	.button {
+		border-color: var(--border-visible) !important;
+		color: var(--text-1) !important;
+	}
 
 	.button.primary {
 		background-color: var(--accent) !important;
@@ -434,7 +643,7 @@
 		}
 
 		/* Everything the section actually contains has to clear the layer.
-		   .hero-resume is deliberately absent: it is already absolutely
+		   .theme-toggle is deliberately absent: it is already absolutely
 		   positioned at z-index 5, and giving it position:relative here
 		   dropped it back into flow as a full-width bar. */
 		#intro > .inner,
@@ -490,16 +699,16 @@
 	   and 17.1:1 on hover. --- */
 
 	#sidebar nav a {
-		color: rgba(255, 255, 255, 0.75);   /* 10.00:1 */
+		color: var(--text-2);   /* light grey→ink already inverted here; token carries both themes */
 	}
 
 		#sidebar nav a:hover {
-			color: #ffffff;                 /* 17.05:1 */
+			color: var(--text-1);
 		}
 
 		/* Was #000000 — correct on the light grey, 1.2:1 on ink. */
 		#sidebar nav a.active {
-			color: #ffffff;
+			color: var(--text-1);
 		}
 
 		/* The nav underline is two stacked bars: :before is the full-width
@@ -508,7 +717,7 @@
 		   leaves the track at 2:1 and the fill invisible. Inverted here —
 		   faint rail, accent fill. */
 		#sidebar nav a:before {
-			background: rgba(255, 255, 255, 0.12);
+			background: var(--surface-tint-3);
 		}
 
 		#sidebar nav a:after {
@@ -517,9 +726,8 @@
 		}
 
 	/* Visible keyboard focus for every sidebar control. */
-	#sidebar a:focus-visible,
-	.hero-resume:focus-visible {
-		outline: 3px solid #ffffff;
+	#sidebar a:focus-visible {
+		outline: 3px solid var(--focus-ring);
 		outline-offset: 3px;
 	}
 
@@ -555,8 +763,8 @@
 
 			.resume-btn:hover,
 			.resume-btn:focus {
-				background-color: var(--accent-deep);
-				border-color: var(--accent-deep);
+				background-color: var(--accent-strong);
+				border-color: var(--accent-strong);
 				color: #ffffff;
 			}
 
@@ -574,7 +782,7 @@
 
 			.contact-list a {
 				border: 0;
-				color: rgba(255, 255, 255, 0.7);   /* 8.83:1 on ink-700 */
+				color: var(--text-2);
 				display: -moz-flex;
 				display: -webkit-flex;
 				display: -ms-flex;
@@ -599,7 +807,7 @@
 			}
 
 				.contact-list a:hover {
-					color: #ffffff;
+					color: var(--text-1);
 				}
 
 				/* Icons are decorative (aria-hidden); the adjacent text
@@ -626,30 +834,143 @@
 					word-break: break-word;
 				}
 
-	/* --- Hero resume button: top-right of the home screen. White rather than
-	   the sidebar's maroon fill — the hero gradient ends in maroon, so a
-	   maroon button there would have almost no edge. Ink text on white is
-	   16.9:1, and the button holds 8.5:1 or better anywhere on the
-	   gradient. --- */
+	/* --- Theme toggle: top-right of the home screen, where the resume
+	   button used to sit (resume access lives in the sidebar too, so this
+	   wasn't the only way to reach it). A sliding pill switch — track plus
+	   a thumb that carries the current-mode icon and moves with it — rather
+	   than the plain icon button this replaced.
 
-	.hero-resume {
+	   Track and thumb are fixed literals rather than tokens: the hero is
+	   maroon in both themes now, so a white track with a maroon thumb
+	   reads clearly against it either way, with no need to flip. The ring
+	   (a hairline box-shadow rather than a border, so it doesn't add to
+	   the track's box size) keeps the white track readable as a control
+	   rather than a blank patch against the maroon behind it. --- */
+
+	.theme-toggle {
 		position: absolute;
 		top: 1.75em;
 		right: 1.75em;
 		z-index: 5;
-		width: auto;
-		display: inline-block;
-		padding: 1.1em 1.75em;
-		background-color: #ffffff;
-		border-color: #ffffff;
-		color: var(--ink-900);
+		width: 58px;
+		height: 30px;
+		background: transparent;
+		/* main.css's bare `button` selector sets `border: solid 1px !important`
+		   — needs matching !important to actually remove it, not just lose
+		   on specificity. With box-sizing: border-box (also main.css) that
+		   1px border was shrinking the track's 100%/100% box to 56x28
+		   inside a 58x30 button, throwing the thumb's "symmetric 3px
+		   margin" math off by a couple of px and making the whole control
+		   look uncentred. */
+		border: 0 !important;
+		border-radius: 999px;
+		cursor: pointer;
+		padding: 0;
 	}
 
-		.hero-resume:hover,
-		.hero-resume:focus {
+		/* Hidden until theme.js confirms it can wire up the click handler —
+		   a button that does nothing under JS-disabled is worse than no
+		   button. */
+		.theme-toggle[hidden] {
+			display: none;
+		}
+
+		.theme-toggle-track {
+			display: block;
+			position: relative;
+			width: 100%;
+			height: 100%;
+			background-color: #ffffff;
+			border-radius: 999px;
+			box-shadow: 0 0 0 1px rgba(20, 17, 25, 0.14);
+			-moz-transition: background-color 0.2s ease, box-shadow 0.2s ease;
+			-webkit-transition: background-color 0.2s ease, box-shadow 0.2s ease;
+			-ms-transition: background-color 0.2s ease, box-shadow 0.2s ease;
+			transition: background-color 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.theme-toggle:hover .theme-toggle-track,
+		.theme-toggle:focus .theme-toggle-track {
+			box-shadow: 0 0 0 1px rgba(20, 17, 25, 0.3);
+		}
+
+		.theme-toggle:focus-visible {
+			outline: 3px solid var(--focus-ring);
+			outline-offset: 3px;
+		}
+
+		/* Sized to leave a matching 3px margin on every edge of the track
+		   at rest (30px track height - 2 x 3px = 24px thumb). Fixed px
+		   throughout rather than em: this is a discrete control, not type,
+		   so it has no reason to grow with the page's own responsive body
+		   font-size the way the old icon button implicitly did. */
+		.theme-toggle-thumb {
+			position: absolute;
+			top: 3px;
+			left: 3px;
+			width: 24px;
+			height: 24px;
+			background-color: var(--accent-deep);
+			border-radius: 100%;
+			-moz-transition: -moz-transform 0.25s ease, background-color 0.2s ease;
+			-webkit-transition: -webkit-transform 0.25s ease, background-color 0.2s ease;
+			-ms-transition: -ms-transform 0.25s ease, background-color 0.2s ease;
+			transition: transform 0.25s ease, background-color 0.2s ease;
+		}
+
+		.theme-toggle:hover .theme-toggle-thumb,
+		.theme-toggle:focus .theme-toggle-thumb {
 			background-color: var(--accent);
-			border-color: var(--accent);
+		}
+
+		/* Slides right by the track's width minus the thumb's width minus
+		   its own two 3px margins (58px - 24px - 6px = 28px). */
+		:root[data-theme="light"] .theme-toggle-thumb {
+			-moz-transform: translateX(28px);
+			-webkit-transform: translateX(28px);
+			-ms-transform: translateX(28px);
+			transform: translateX(28px);
+		}
+
+		/* Centred on the thumb by absolute position + translate rather than
+		   flex: flex only centres the icon's *box*, and that box inherits
+		   an inline-block line-height from the Font Awesome glyph rules
+		   that's taller than the glyph itself, which read as the icon
+		   sitting low and off-centre. Fixing the box to the glyph's own
+		   em-square (line-height: 1) and centring that box on the thumb's
+		   true centre point is what actually lands it in the middle. */
+		.theme-toggle-icon {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-moz-transform: translate(-50%, -50%);
+			-webkit-transform: translate(-50%, -50%);
+			-ms-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
 			color: #ffffff;
+			font-size: 12px;
+			line-height: 1;
+			pointer-events: none;
+		}
+
+			.theme-toggle-icon:before {
+				line-height: 1;
+			}
+
+		/* The thumb carries whichever icon matches the mode it just slid
+		   into — moon on the left/dark position, sun on the right/light
+		   one — so the animation reads as the thumb changing state, not
+		   two unrelated icons on either end of the track. */
+		.theme-toggle-icon--light {
+			display: none;
+		}
+
+		:root[data-theme="light"] .theme-toggle-icon--dark {
+			display: none;
+		}
+
+		:root[data-theme="light"] .theme-toggle-icon--light {
+			display: block;
 		}
 
 	/* ---- Tablet: template collapses sidebar to a 3.5em top bar ---- */
@@ -745,6 +1066,22 @@
 		background-size: 100% 100%, cover;
 		border-bottom: solid 1px var(--hairline);
 	}
+
+		/* Light theme keeps the same maroon tail — white text needs it — and
+		   swaps only the dark anchor for white. The diagonal texture (drawn
+		   white, meant to sit faintly against a dark ground) is dropped
+		   here rather than left showing at full strength against its own
+		   white anchor. */
+		/* Flat maroon rather than a gradient: a wash toward white put the
+		   hero's identity block or About Me column in the light end often
+		   enough (it moves against a gradient sized to the whole box as
+		   the layout reflows across breakpoints) that the safe option is
+		   to not have a light end at all. Solid --accent-deep holds white
+		   text at 9.2:1 everywhere, at every width. */
+		:root[data-theme="light"] #intro {
+			background-color: var(--accent-deep);
+			background-image: none;
+		}
 
 	#intro.wrapper.fullscreen {
 		min-height: 62vh;
@@ -917,7 +1254,7 @@
 				}
 
 				.hero-contact a:focus-visible {
-					outline: 3px solid #ffffff;
+					outline: 3px solid var(--focus-ring);
 					outline-offset: 3px;
 				}
 
@@ -1272,7 +1609,7 @@
 			}
 
 			.hero-about a:focus-visible {
-				outline: 3px solid #ffffff;
+				outline: 3px solid var(--focus-ring);
 				outline-offset: 3px;
 			}
 
@@ -1430,7 +1767,7 @@
 		}
 
 		.spotlights > section:nth-child(even) {
-			background-color: rgba(255, 255, 255, 0.035);
+			background-color: var(--surface-tint-1);
 		}
 
 		.spotlights > section + section {
@@ -1578,9 +1915,9 @@
 			appearance: none;
 			background-color: transparent;
 			border: 0 !important;
-			border-left: solid 3px rgba(255, 255, 255, 0.2) !important;
+			border-left: solid 3px var(--border-visible) !important;
 			border-radius: 0 0.35em 0.35em 0;
-			color: rgba(255, 255, 255, 0.75) !important;
+			color: var(--text-2) !important;
 			cursor: pointer;
 			display: -moz-flex;
 			display: -webkit-flex;
@@ -1632,7 +1969,7 @@
 			.tabs-tab.is-active {
 				background-color: var(--ink-600);
 				border-left-color: var(--accent) !important;
-				color: #ffffff !important;
+				color: var(--text-1) !important;
 				font-weight: bold;
 			}
 
@@ -1641,7 +1978,7 @@
 				}
 
 			.tabs-tab:focus-visible {
-				outline: 3px solid #ffffff;
+				outline: 3px solid var(--focus-ring);
 				outline-offset: -3px;
 			}
 
@@ -1738,7 +2075,7 @@
 					-ms-align-self: center;
 					align-self: center;
 					aspect-ratio: 16 / 9;
-					background-color: rgba(255, 255, 255, 0.05);
+					background-color: var(--surface-tint-2);
 					border-radius: 0.35em;
 					display: block;
 					overflow: hidden;
@@ -1972,7 +2309,7 @@
 		}
 
 		.pub-group-title {
-			border-bottom: solid 2px rgba(255, 255, 255, 0.2);
+			border-bottom: solid 2px var(--border-visible);
 			font-size: 1.1em;
 			letter-spacing: 0.05em;
 			padding-bottom: 0.4em;
@@ -1981,7 +2318,7 @@
 
 		/* Placeholder for a degree with nothing published yet. */
 		.pub-empty {
-			color: rgba(255, 255, 255, 0.6);
+			color: var(--text-3);
 			font-size: 0.85em;
 			font-style: italic;
 			margin: 0.75em 0 0 0;
@@ -2005,7 +2342,7 @@
 		   of the tag's column rather than running edge to edge; the
 		   tag spans all three rows and self-aligns to the top. */
 		.publications > li {
-			border-top: solid 1px rgba(255, 255, 255, 0.15);
+			border-top: solid 1px var(--hairline-strong);
 			display: -ms-grid;
 			display: grid;
 			grid-template-columns: 3fr 1fr;
@@ -2045,9 +2382,18 @@
 			white-space: nowrap;
 		}
 
+			/* Fixed white/near-black regardless of theme rather than tokens —
+			   the badge is meant to read as a solid white pill against
+			   whichever ink shade sits behind it, which only works if it
+			   doesn't also go light when the section around it does. */
 			.pub-tag-journal {
 				background-color: #ffffff;
-				color: var(--ink-900);
+				color: #14131a;
+			}
+
+			:root[data-theme="light"] .pub-tag-journal {
+				background-color: #14111a;
+				color: #ffffff;
 			}
 
 			/* The dark outline this used to carry was there to separate a
@@ -2060,8 +2406,8 @@
 
 			.pub-tag-conference {
 				background-color: transparent;
-				border: 1px solid rgba(255, 255, 255, 0.6);
-				color: rgba(255, 255, 255, 0.9);
+				border: 1px solid var(--border-emphasis);
+				color: var(--text-1);
 			}
 
 		.pub-title {
@@ -2073,16 +2419,16 @@
 
 			.pub-title a {
 				border-bottom: 0;
-				color: #ffffff;
+				color: var(--text-1);
 			}
 
 				.pub-title a:hover {
-					color: rgba(255, 255, 255, 0.75);
+					color: var(--text-2);
 					text-decoration: underline;
 				}
 
 				.pub-title a:focus-visible {
-					outline: 3px solid #ffffff;
+					outline: 3px solid var(--focus-ring);
 					outline-offset: 3px;
 				}
 
@@ -2096,7 +2442,7 @@
 
 		.pub-authors {
 			grid-area: authors;
-			color: rgba(255, 255, 255, 0.8);
+			color: var(--text-2);
 			font-size: 0.8em;
 			line-height: 1.6;
 			margin: 0 0 0.15em 0;
@@ -2104,14 +2450,14 @@
 
 			/* The site owner's own name in the author list. */
 			.pub-authors strong {
-				color: #ffffff;
+				color: var(--text-1);
 			}
 
 		/* Lifted above the template's default body colour so the venue and
 		   date line stays clear of AA on the ink surface. */
 		.pub-meta {
 			grid-area: meta;
-			color: rgba(255, 255, 255, 0.8);
+			color: var(--text-2);
 			font-size: 0.8em;
 			line-height: 1.6;
 			margin: 0;
@@ -2123,13 +2469,13 @@
 
 			/* Secondary links (DOI, repository record). */
 			.pub-meta a {
-				border-bottom-color: rgba(255, 255, 255, 0.4);
+				border-bottom-color: var(--border-emphasis);
 				color: inherit;
 			}
 
 				.pub-meta a:hover {
-					border-bottom-color: #ffffff;
-					color: #ffffff;
+					border-bottom-color: var(--text-1);
+					color: var(--text-1);
 				}
 
 		/* A side tag column has no room on a phone width, so drop to one
@@ -2214,20 +2560,20 @@
 		}
 
 		.involvement-role {
-			color: #ffffff;
+			color: var(--text-1);
 			font-size: 0.95em;
 			margin: 0 0 0.2em 0;
 		}
 
 		.involvement-org {
-			color: rgba(255, 255, 255, 0.8);
+			color: var(--text-2);
 			font-size: 0.8em;
 			line-height: 1.6;
 			margin: 0 0 0.15em 0;
 		}
 
 		.involvement-meta {
-			color: rgba(255, 255, 255, 0.6);
+			color: var(--text-3);
 			font-size: 0.78em;
 			margin: 0;
 		}
@@ -2291,29 +2637,45 @@
 
 		}
 
-/* ---- Hero resume button: responsive sizing ---- */
+/* ---- Theme toggle: responsive sizing ---- */
 
 	@media screen and (max-width: 1280px) {
 
-		.hero-resume {
+		.theme-toggle {
 			top: 1.25em;
 			right: 1.25em;
-			padding: 0.9em 1.4em;
 		}
 
 	}
 
 	@media screen and (max-width: 736px) {
 
-		/* Static on phones so it can't collide with the nav bar or
-		   overlap the headshot on a narrow screen. */
-		.hero-resume {
-			position: static;
-			display: block;
-			width: 100%;
-			max-width: 16em;
-			margin: 1.5em auto 0 auto;
-			padding: 1.1em 1.5em;
+		/* Smaller and pulled in, but still corner-pinned — unlike the old
+		   full-width resume button, a small switch never collides with the
+		   stacked hero content beneath it. */
+		.theme-toggle {
+			top: 1em;
+			right: 1em;
+			width: 46px;
+			height: 24px;
+		}
+
+		.theme-toggle-thumb {
+			width: 18px;
+			height: 18px;
+		}
+
+		/* Track width minus thumb width minus its two 3px margins:
+		   46 - 18 - 6 = 22px. */
+		:root[data-theme="light"] .theme-toggle-thumb {
+			-moz-transform: translateX(22px);
+			-webkit-transform: translateX(22px);
+			-ms-transform: translateX(22px);
+			transform: translateX(22px);
+		}
+
+		.theme-toggle-icon {
+			font-size: 9px;
 		}
 
 	}

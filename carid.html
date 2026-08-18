@@ -9,6 +9,22 @@
 		<title>CARID</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- Sets [data-theme] before first paint, so the page never flashes
+		     the wrong theme. Inline and first in <head> on purpose — an
+		     external file would load too late; see assets/js/theme.js for
+		     the toggle itself. -->
+		<script>
+			(function () {
+				try {
+					var stored = localStorage.getItem('theme');
+					// Dark is the site's standard, regardless of system
+					// preference — light only if the visitor explicitly
+					// chose it last time.
+					var theme = stored === 'light' ? 'light' : 'dark';
+					document.documentElement.setAttribute('data-theme', theme);
+				} catch (e) {}
+			})();
+		</script>
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/custom.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
@@ -17,6 +33,14 @@
 
 		<!-- Header -->
 			<header id="header">
+				<button type="button" class="theme-toggle" aria-label="Switch to light theme" aria-pressed="false" hidden>
+					<span class="theme-toggle-track">
+						<span class="theme-toggle-thumb">
+							<span class="icon solid fa-moon theme-toggle-icon theme-toggle-icon--dark" aria-hidden="true"></span>
+							<span class="icon solid fa-sun theme-toggle-icon theme-toggle-icon--light" aria-hidden="true"></span>
+						</span>
+					</span>
+				</button>
 				<div class="particles" data-particles data-particle-count="45" data-particle-opacity="0.55" data-glow-intensity="9" data-mouse-influence="140" aria-hidden="true"></div>
 				<a href="index.html" class="title">ISE 3614: Intro to Human Factors Engineering</a>
 				<nav>
@@ -82,6 +106,7 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/particles.js"></script>
+			<script src="assets/js/theme.js"></script>
 
 	</body>
 </html>

@@ -4,6 +4,22 @@
 		<title>Tony Lee</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- Sets [data-theme] before first paint, so the page never flashes
+		     the wrong theme. Inline and first in <head> on purpose — an
+		     external file would load too late; see assets/js/theme.js for
+		     the toggle itself. -->
+		<script>
+			(function () {
+				try {
+					var stored = localStorage.getItem('theme');
+					// Dark is the site's standard, regardless of system
+					// preference — light only if the visitor explicitly
+					// chose it last time.
+					var theme = stored === 'light' ? 'light' : 'dark';
+					document.documentElement.setAttribute('data-theme', theme);
+				} catch (e) {}
+			})();
+		</script>
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/custom.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
@@ -18,7 +34,7 @@
 							<li><a href="#intro"><b>Welcome</b></a></li>
 							<li><a href="#one"><b>Recent Projects</b></a></li>
 							<li><a href="#two"><b>Other Projects</b></a></li>
-							<li><a href="#involvement"><b>Leadership &amp; Involvement</b></a></li>
+							<li><a href="#involvement"><b>Leadership</b></a></li>
 							<li><a href="#three"><b>Publications</b></a></li>
 						</ul>
 					</nav>
@@ -54,7 +70,14 @@
 				<!-- Intro -->
 					<section id="intro" class="wrapper style1 fullscreen fade-up">
 						<div class="particles" data-particles data-particle-count="60" data-particle-opacity="0.55" data-glow-intensity="9" data-mouse-influence="140" aria-hidden="true"></div>
-						<a href="assets/Lee_T_Resume.pdf" target="_blank" rel="noopener" class="resume-btn hero-resume" aria-label="View resume (PDF, opens in a new tab)">View Resume</a>
+						<button type="button" class="theme-toggle" aria-label="Switch to light theme" aria-pressed="false" hidden>
+							<span class="theme-toggle-track">
+								<span class="theme-toggle-thumb">
+									<span class="icon solid fa-moon theme-toggle-icon theme-toggle-icon--dark" aria-hidden="true"></span>
+									<span class="icon solid fa-sun theme-toggle-icon theme-toggle-icon--light" aria-hidden="true"></span>
+								</span>
+							</span>
+						</button>
 						<div class="inner">
 							<div class="hero-layout">
 								<div class="hero-identity">
@@ -340,7 +363,7 @@
 										<p class="involvement-org">Human Factors and Ergonomics Society (HFES) at Virginia Tech</p>
 										<p class="involvement-meta">May 2026 &ndash; Present &middot; 4 mos</p>
 									</div>
-									<span class="involvement-logo"><img src="images/logos/HFES.png" alt="Human Factors and Ergonomics Society, Virginia Tech Student Chapter" /></span>
+									<span class="involvement-logo"><img src="images/logos/HFES.png" data-src-dark="images/logos/HFES.png" data-src-light="images/logos/HFES-light.png" alt="Human Factors and Ergonomics Society, Virginia Tech Student Chapter" /></span>
 								</li>
 								<li>
 									<span class="icon solid fa-hashtag involvement-icon" aria-hidden="true"></span>
@@ -349,7 +372,7 @@
 										<p class="involvement-org">Human Factors and Ergonomics Society (HFES) at Virginia Tech</p>
 										<p class="involvement-meta">Aug 2025 &ndash; May 2026 &middot; 10 mos</p>
 									</div>
-									<span class="involvement-logo"><img src="images/logos/HFES.png" alt="Human Factors and Ergonomics Society, Virginia Tech Student Chapter" /></span>
+									<span class="involvement-logo"><img src="images/logos/HFES.png" data-src-dark="images/logos/HFES.png" data-src-light="images/logos/HFES-light.png" alt="Human Factors and Ergonomics Society, Virginia Tech Student Chapter" /></span>
 								</li>
 								<li>
 									<span class="icon solid fa-bullhorn involvement-icon" aria-hidden="true"></span>
@@ -358,7 +381,7 @@
 										<p class="involvement-org">INCOSE &mdash; Virginia Tech Chapter</p>
 										<p class="involvement-meta">Sep 2024 &ndash; May 2025 &middot; 9 mos</p>
 									</div>
-									<span class="involvement-logo"><img src="images/logos/INCOSE.png" alt="INCOSE" /></span>
+									<span class="involvement-logo"><img src="images/logos/INCOSE-white.png" alt="INCOSE" /></span>
 								</li>
 								<li>
 									<span class="icon solid fa-users involvement-icon" aria-hidden="true"></span>
@@ -367,7 +390,7 @@
 										<p class="involvement-org">Virginia Tech Grado Department of Industrial and Systems Engineering</p>
 										<p class="involvement-meta">Jan 2024 &ndash; May 2025 &middot; 1 yr 5 mos</p>
 									</div>
-									<span class="involvement-logo"><img src="images/logos/VirginiaTech.png" alt="Virginia Tech" /></span>
+									<span class="involvement-logo"><img src="images/logos/VirginiaTech.png" data-src-dark="images/logos/VirginiaTech.png" data-src-light="images/logos/VirginiaTech-light.png" alt="Virginia Tech" /></span>
 								</li>
 								<li>
 									<span class="icon solid fa-calendar-alt involvement-icon" aria-hidden="true"></span>
@@ -376,7 +399,7 @@
 										<p class="involvement-org">Virginia Tech Center for Human-Computer Interaction</p>
 										<p class="involvement-meta">Jan 2022 &ndash; Dec 2022 &middot; 1 yr</p>
 									</div>
-									<span class="involvement-logo"><img src="images/logos/CHCI.png" alt="Virginia Tech Center for Human-Computer Interaction" /></span>
+									<span class="involvement-logo"><img src="images/logos/CHCI.png" data-src-dark="images/logos/CHCI.png" data-src-light="images/logos/CHCI-light.png" alt="Virginia Tech Center for Human-Computer Interaction" /></span>
 								</li>
 							</ul>
 						</div>
@@ -464,6 +487,7 @@
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/project-tabs.js"></script>
 			<script src="assets/js/particles.js"></script>
+			<script src="assets/js/theme.js"></script>
 
 	</body>
 </html>
