@@ -971,6 +971,14 @@
 
 		:root[data-theme="light"] .theme-toggle-icon--light {
 			display: block;
+			/* The sun glyph's own ink isn't centred in its advance box the
+			   way the moon's is — measuring the box lands it dead-centre
+			   mathematically, but the rays read as sitting slightly left
+			   of the circle's true middle. Nudged right to compensate. */
+			-moz-transform: translate(calc(-50% + 1px), -50%);
+			-webkit-transform: translate(calc(-50% + 1px), -50%);
+			-ms-transform: translate(calc(-50% + 1px), -50%);
+			transform: translate(calc(-50% + 1px), -50%);
 		}
 
 	/* ---- Tablet: template collapses sidebar to a 3.5em top bar ---- */
